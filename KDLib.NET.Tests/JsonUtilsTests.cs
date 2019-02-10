@@ -93,7 +93,6 @@ namespace KDLib.NET.Tests
 
       var sanitized = JsonUtils.SanitizeObject(obj, opt);
 
-
       var expected = JToken.FromObject(new {
           a = 1,
           c = 3,
@@ -111,6 +110,57 @@ namespace KDLib.NET.Tests
       });
 
       Assert.Equal(expected, sanitized);
+    }
+
+    [Fact]
+    public void JsonCleaner()
+    {
+      var obj1 = JObject.FromObject(new {
+          a = 1,
+          b = (string) null,
+          c = "",
+          d = 2,
+          e = new[] {
+              new {
+                  f = 3,
+                  g = "",
+                  h = new int[] { },
+              }
+          },
+          i = new {
+          }
+      });
+      var obj1cleaned = JsonUtils.CleanJObject(obj1);
+      var obj1expected = JObject.FromObject(new {
+          a = 1,
+          d = 2,
+          e = new[] {
+              new {
+                  f = 3,
+              }
+          }
+      });
+
+      Assert.Equal(obj1expected, obj1cleaned);
+
+
+      var obj2 = JArray.FromObject(new object[] {
+              new {
+              },
+              new {
+                      f = 3,
+                      g = "",
+                      h = new int[] { },
+              }
+      });
+      var obj2cleaned = JsonUtils.CleanJArray(obj2);
+      var obj2expected = JArray.FromObject(new object[] {
+              new {
+                      f = 3,
+              }
+      });
+
+      Assert.Equal(obj2expected, obj2cleaned);
     }
   }
 }

@@ -60,5 +60,56 @@ namespace KDLib
       SanitizeObjectInternal(clone);
       return clone;
     }
+
+    public static JArray CleanJArray(JArray obj)
+    {
+      var cloned = (JArray) obj.DeepClone();
+      CleanJTokenReturnIsEmpty(cloned);
+      return cloned;
+    }
+
+    public static JObject CleanJObject(JObject obj)
+    {
+      var cloned = (JObject) obj.DeepClone();
+      CleanJTokenReturnIsEmpty(cloned);
+      return cloned;
+    }
+
+    public static JToken CleanJToken(JToken obj)
+    {
+      var cloned = obj.DeepClone();
+      CleanJTokenReturnIsEmpty(cloned);
+      return cloned;
+    }
+
+    private static bool CleanJTokenReturnIsEmpty(JToken v)
+    {
+      switch (v) {
+        case JValue jValue:
+          if (jValue.Value == null)
+            return true;
+
+          switch (jValue.Value) {
+            case string s:
+              return string.IsNullOrWhiteSpace(s);
+            default:
+              return false;
+          }
+
+        case JObject jObject:
+          jObject.Properties()
+                 .Where(x => CleanJTokenReturnIsEmpty(x.Value))
+                 .ToList()
+                 .ForEach(x => jObject.Remove(x.Name));
+          return jObject.Count == 0;
+        case JArray jArray:
+          for (int i = jArray.Count - 1; i >= 0; i--)
+            if (CleanJTokenReturnIsEmpty(jArray[i]))
+              jArray.RemoveAt(i);
+          return jArray.Count == 0;
+        default:
+          return false;
+      }
+    }
   }
 }
