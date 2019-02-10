@@ -36,7 +36,7 @@ namespace KDLib.NET.Tests
   ""b"": 2
 }", serialized);
     }
-    
+
     [Fact]
     public void JsonSortArray()
     {
@@ -47,7 +47,7 @@ namespace KDLib.NET.Tests
       var serialized = obj.ToString(Formatting.None);
       Assert.Equal(@"[1,{""a"":2,""b"":2}]", serialized);
     }
-    
+
     [Fact]
     public void JsonSortToken()
     {
@@ -55,6 +55,62 @@ namespace KDLib.NET.Tests
 
       var serialized = obj.ToString(Formatting.None);
       Assert.Equal(@"32", serialized);
+    }
+
+    [Fact]
+    public void JsonSanitizer()
+    {
+      var opt = new JsonUtils.SanitizerOptions() {
+          RemoveFields = new HashSet<string>() {
+              "b",
+              "f",
+              "h",
+          },
+          ReplaceWithValue = new Dictionary<string, string>() {
+              ["e"] = "***",
+          }
+      };
+
+      var obj = JToken.FromObject(new {
+          a = 1,
+          b = 2,
+          c = 3,
+          d = new {
+              e = 4,
+              f = 5,
+              g = new[] {
+                  new {
+                      h = 6,
+                      i = 7,
+                  },
+                  new {
+                      h = 8,
+                      i = 9,
+                  }
+              }
+          }
+      });
+
+      var sanitized = JsonUtils.SanitizeObject(obj, opt);
+
+
+      var expected = JToken.FromObject(new {
+          a = 1,
+          c = 3,
+          d = new {
+              e = "***",
+              g = new[] {
+                  new {
+                      i = 7,
+                  },
+                  new {
+                      i = 9,
+                  }
+              }
+          }
+      });
+
+      Assert.Equal(expected, sanitized);
     }
   }
 }
