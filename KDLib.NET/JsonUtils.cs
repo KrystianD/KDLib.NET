@@ -39,9 +39,9 @@ namespace KDLib
             foreach (var propertyName in props) {
               var propertyNameLower = propertyName.ToLower();
 
-              if (options.RemoveFields.Contains(propertyNameLower))
+              if (options.RemoveFields != null && options.RemoveFields.Contains(propertyNameLower))
                 jObject.Remove(propertyName);
-              else if (options.ReplaceWithValue.TryGetValue(propertyNameLower, out var replacement))
+              else if (options.ReplaceWithValue != null && options.ReplaceWithValue.TryGetValue(propertyNameLower, out var replacement))
                 jObject[propertyName] = replacement;
               else
                 SanitizeObjectInternal(jObject[propertyName]);
