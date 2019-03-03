@@ -15,7 +15,7 @@ namespace KDLib
         var completed = await Task.WhenAny(task, Task.Delay(timeout, timeoutCancellationTokenSource.Token));
         if (completed == task) {
           timeoutCancellationTokenSource.Cancel();
-          return await task;
+          return task.Result;
         }
         else {
           throw new TimeoutException();
@@ -29,11 +29,31 @@ namespace KDLib
         var completed = await Task.WhenAny(task, Task.Delay(timeout, timeoutCancellationTokenSource.Token));
         if (completed == task) {
           timeoutCancellationTokenSource.Cancel();
-          await task;
         }
         else {
           throw new TimeoutException();
         }
+      }
+    }
+
+    public static async Task<T> FastCancellableTask<T>(Task<T> task, CancellationToken token)
+    {
+      var completed = await Task.WhenAny(task, Task.Delay(Timeout.InfiniteTimeSpan, token));
+      if (completed == task) {
+        return task.Result;
+      }
+      else {
+        throw new TaskCanceledException();
+      }
+    }
+
+    public static async Task FastCancellableTask(Task task, CancellationToken token)
+    {
+      var completed = await Task.WhenAny(task, Task.Delay(Timeout.InfiniteTimeSpan, token));
+      if (completed == task) {
+      }
+      else {
+        throw new TaskCanceledException();
       }
     }
 
