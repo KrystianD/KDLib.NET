@@ -76,7 +76,7 @@ namespace KDLib.HMAC
 
     private bool DecodeInternal(string signedString, out T value)
     {
-      var parts = signedString.Split('.', 2);
+      var parts = signedString.Split(new[] { '.' }, 2);
       if (parts.Length != 2) {
         value = default;
         return false;

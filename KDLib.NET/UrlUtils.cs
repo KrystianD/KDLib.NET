@@ -74,8 +74,8 @@ namespace KDLib
         return url;
 
       var qs = HttpUtility.ParseQueryString(new Uri(url).Query);
-      foreach (var (key, value) in newQueryData)
-        qs.Set(key, value);
+      foreach (var keyValuePair in newQueryData)
+        qs.Set(keyValuePair.Key, keyValuePair.Value);
 
       return CreateUrl(url, qs);
     }
