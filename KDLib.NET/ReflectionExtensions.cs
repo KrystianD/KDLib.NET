@@ -24,7 +24,6 @@ namespace KDLib
       return type.PropertyType.IsGenericList();
     }
 
-
     public static bool IsNullable(this Type type)
     {
       return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
@@ -44,9 +43,8 @@ namespace KDLib
         var d = type.GetGenericTypeDefinition();
         if (d.IsClass && d.IsSealed && d.Attributes.HasFlag(TypeAttributes.NotPublic)) {
           var attributes = d.GetCustomAttributes(typeof(CompilerGeneratedAttribute), false);
-          if (attributes != null && attributes.Length > 0) {
+          if (attributes.Length > 0)
             return true;
-          }
         }
       }
 

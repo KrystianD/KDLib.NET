@@ -40,8 +40,9 @@ namespace KDLib
     {
       if (queryData == null)
         return url;
-      var qb = new UriBuilder(url);
-      qb.Query = UrlEncodeKeyValuePairs(queryData);
+      var qb = new UriBuilder(url) {
+          Query = UrlEncodeKeyValuePairs(queryData)
+      };
       if (qb.Uri.IsDefaultPort)
         qb.Port = -1;
       return qb.ToString();
@@ -56,8 +57,9 @@ namespace KDLib
     {
       if (queryData == null)
         return url;
-      var qb = new UriBuilder(url);
-      qb.Query = UrlEncodeKeyValuePairs(queryData);
+      var qb = new UriBuilder(url) {
+          Query = UrlEncodeKeyValuePairs(queryData)
+      };
       if (qb.Uri.IsDefaultPort)
         qb.Port = -1;
       return qb.ToString();
