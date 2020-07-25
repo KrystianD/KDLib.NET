@@ -13,7 +13,7 @@ namespace KDLib
       return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(List<>);
     }
 
-    public static bool IsGenericEumerable(this Type type)
+    public static bool IsGenericEnumerable(this Type type)
     {
       return type.IsGenericType && 
              (type.GetGenericTypeDefinition() == typeof(IEnumerable<>) || type.ReflectedType == typeof(Enumerable));
