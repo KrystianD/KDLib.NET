@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace KDLib
 {
-  public static class LINQExtension
+  public static class LinqExtension
   {
     public static string JoinString(this IEnumerable<string> source, string separator = "")
     {
