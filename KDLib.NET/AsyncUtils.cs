@@ -50,23 +50,52 @@ namespace KDLib
     public static async Task FastCancellableTask(Task task, CancellationToken token)
     {
       var completed = await Task.WhenAny(task, Task.Delay(Timeout.InfiniteTimeSpan, token));
-      if (completed == task) {
-      }
+      if (completed == task) { }
       else {
         throw new TaskCanceledException();
       }
     }
 
-    public static async Task<Tuple<T1, T2>> WaitAll<T1, T2>(Task<T1> t1, Task<T2> t2)
+    public static async Task<Tuple<T1, T2>> WaitAll<T1, T2>(
+        Task<T1> t1, Task<T2> t2)
     {
       await Task.WhenAll(t1, t2);
       return Tuple.Create(t1.Result, t2.Result);
     }
 
-    public static async Task<Tuple<T1, T2, T3>> WaitAll<T1, T2, T3>(Task<T1> t1, Task<T2> t2, Task<T3> t3)
+    public static async Task<Tuple<T1, T2, T3>> WaitAll<T1, T2, T3>(
+        Task<T1> t1, Task<T2> t2, Task<T3> t3)
     {
       await Task.WhenAll(t1, t2, t3);
       return Tuple.Create(t1.Result, t2.Result, t3.Result);
+    }
+
+    public static async Task<Tuple<T1, T2, T3, T4>> WaitAll<T1, T2, T3, T4>(
+        Task<T1> t1, Task<T2> t2, Task<T3> t3, Task<T4> t4)
+    {
+      await Task.WhenAll(t1, t2, t3, t4);
+      return Tuple.Create(t1.Result, t2.Result, t3.Result, t4.Result);
+    }
+
+    public static async Task<Tuple<T1, T2, T3, T4, T5>> WaitAll<T1, T2, T3, T4, T5>(
+        Task<T1> t1, Task<T2> t2, Task<T3> t3, Task<T4> t4, Task<T5> t5)
+    {
+      await Task.WhenAll(t1, t2, t3, t4, t5);
+      return Tuple.Create(t1.Result, t2.Result, t3.Result, t4.Result, t5.Result);
+    }
+
+    public static async Task<Tuple<T1, T2, T3, T4, T5, T6>> WaitAll<T1, T2, T3, T4, T5, T6>(
+        Task<T1> t1, Task<T2> t2, Task<T3> t3, Task<T4> t4, Task<T5> t5, Task<T6> t6)
+    {
+      await Task.WhenAll(t1, t2, t3, t4, t5, t6);
+      return Tuple.Create(t1.Result, t2.Result, t3.Result, t4.Result, t5.Result, t6.Result);
+    }
+
+    public static async Task<Tuple<T1, T2, T3, T4, T5, T6, T7>> WaitAll<T1, T2, T3, T4, T5, T6, T7>(
+        Task<T1> t1, Task<T2> t2, Task<T3> t3, Task<T4> t4, Task<T5> t5, Task<T6> t6, Task<T7> t7)
+    {
+      await Task.WhenAll(t1, t2, t3, t4, t5, t6, t7);
+      return Tuple.Create(t1.Result, t2.Result, t3.Result, t4.Result, t5.Result, t6.Result, t7.Result);
     }
 
     public static async Task<List<TOutput>> TransformAsync<TInput, TOutput>(IEnumerable<TInput> input, int maxRunningTasks,
@@ -77,11 +106,9 @@ namespace KDLib
         taskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
 
       return await Task.Factory.StartNew(
-          async () =>
-          {
+          async () => {
             using (var semaphore = new SemaphoreSlim(maxRunningTasks)) {
-              var tasks = input.Select(async item =>
-              {
+              var tasks = input.Select(async item => {
                 await semaphore.WaitAsync();
                 try {
                   return await processor(item);
