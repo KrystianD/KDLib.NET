@@ -29,7 +29,14 @@ namespace KDLib
 
           timeoutCancellationTokenSource.Cancel();
 
-          if (completed == connectTask) { }
+          if (completed == connectTask) {
+            if (completed.IsFaulted) {
+              if (completed.Exception?.InnerException != null)
+                throw completed.Exception.InnerException;
+              else
+                throw new Exception("unknown error");
+            }
+          }
           else if (completed == timeoutTask) {
             client.Close();
             throw new TimeoutException();
