@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 
 namespace KDLib
 {
@@ -15,7 +16,7 @@ namespace KDLib
 
     public static bool IsGenericEnumerable(this Type type)
     {
-      return type.IsGenericType && 
+      return type.IsGenericType &&
              (type.GetGenericTypeDefinition() == typeof(IEnumerable<>) || type.ReflectedType == typeof(Enumerable));
     }
 
@@ -49,6 +50,17 @@ namespace KDLib
       }
 
       return false;
+    }
+
+    public static string GetMemberValue(this Enum value)
+    {
+      FieldInfo fieldInfo = value.GetType().GetField(value.ToString());
+      if (fieldInfo == null)
+        throw new ArgumentException("Enum member doesn't exist");
+      var attribute = (EnumMemberAttribute)fieldInfo.GetCustomAttribute(typeof(EnumMemberAttribute));
+      if (attribute == null)
+        throw new ArgumentException("Enum member doesn't have EnumMember attribute");
+      return attribute.Value;
     }
   }
 }
