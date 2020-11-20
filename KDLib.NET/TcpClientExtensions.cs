@@ -8,15 +8,15 @@ namespace KDLib
 {
   public static class TcpClientConnectAsyncExtensions
   {
-    public static Task ConnectAsync(this TcpClient client, IPAddress address, int port, TimeSpan timeout)
-      => client.ConnectAsync(address, port, timeout, CancellationToken.None);
+    public static Task ConnectAsync(this TcpClient client, string host, int port, TimeSpan timeout)
+      => client.ConnectAsync(host, port, timeout, CancellationToken.None);
 
-    public static Task ConnectAsync(this TcpClient client, IPAddress address, int port, CancellationToken cancellationToken)
-      => client.ConnectAsync(address, port, Timeout.InfiniteTimeSpan, cancellationToken);
+    public static Task ConnectAsync(this TcpClient client, string host, int port, CancellationToken cancellationToken)
+      => client.ConnectAsync(host, port, Timeout.InfiniteTimeSpan, cancellationToken);
 
-    public static async Task ConnectAsync(this TcpClient client, IPAddress address, int port, TimeSpan timeout, CancellationToken cancellationToken)
+    public static async Task ConnectAsync(this TcpClient client, string host, int port, TimeSpan timeout, CancellationToken cancellationToken)
     {
-      var connectTask = client.ConnectAsync(address, port);
+      var connectTask = client.ConnectAsync(host, port);
 
       var cancellationTaskSource = new TaskCompletionSource<bool>();
 
@@ -49,13 +49,13 @@ namespace KDLib
       }
     }
 
-    public static Task ConnectAsync(this TcpClient client, string host, int port, TimeSpan timeout)
-      => client.ConnectAsync(IPAddress.Parse(host), port, timeout);
+    public static Task ConnectAsync(this TcpClient client, IPAddress address, int port, TimeSpan timeout)
+      => client.ConnectAsync(address.ToString(), port, timeout);
 
-    public static Task ConnectAsync(this TcpClient client, string host, int port, CancellationToken cancellationToken)
-      => client.ConnectAsync(IPAddress.Parse(host), port, cancellationToken);
+    public static Task ConnectAsync(this TcpClient client, IPAddress address, int port, CancellationToken cancellationToken)
+      => client.ConnectAsync(address.ToString(), port, cancellationToken);
 
-    public static Task ConnectAsync(this TcpClient client, string host, int port, TimeSpan timeout, CancellationToken cancellationToken)
-      => client.ConnectAsync(IPAddress.Parse(host), port, timeout, cancellationToken);
+    public static Task ConnectAsync(this TcpClient client, IPAddress address, int port, TimeSpan timeout, CancellationToken cancellationToken)
+      => client.ConnectAsync(address.ToString(), port, timeout, cancellationToken);
   }
 }
