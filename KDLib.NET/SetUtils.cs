@@ -32,7 +32,7 @@ namespace KDLib
       return newSet;
     }
 
-    public static bool SetEquals<T>(IEnumerable<T> set1, IEnumerable<T> set2)
+    public static bool Equals<T>(IEnumerable<T> set1, IEnumerable<T> set2)
     {
       var newSet = new HashSet<T>(set1);
       return newSet.SetEquals(set2);
