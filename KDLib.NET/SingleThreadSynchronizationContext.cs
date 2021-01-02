@@ -12,12 +12,14 @@ namespace KDLib
         BlockingCollection<KeyValuePair<SendOrPostCallback, object>>
         _mQueue = new BlockingCollection<KeyValuePair<SendOrPostCallback, object>>();
 
-
     public override void Post(SendOrPostCallback d, object state)
     {
       _mQueue.Add(new KeyValuePair<SendOrPostCallback, object>(d, state));
     }
 
+    public void Post(SendOrPostCallback d) => Post(d, null);
+    public void Post(Action d) => Post(_ => { d(); }, null);
+    public void Post(Func<Task> d) => Post(_ => { d(); }, null);
 
     public void RunOnCurrentThread()
     {
