@@ -1,10 +1,11 @@
-using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 
 namespace KDLib
 {
+  [PublicAPI]
   public static class StreamExtensions
   {
     public static int ReadAll(this Stream s, byte[] buffer, int offset, int count)

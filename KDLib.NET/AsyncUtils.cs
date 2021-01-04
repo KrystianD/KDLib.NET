@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 
 namespace KDLib
 {
+  [PublicAPI]
   public static class AsyncUtils
   {
     public static async Task<T> WaitFutureTimeout<T>(Task<T> task, TimeSpan timeout)

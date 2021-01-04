@@ -4,9 +4,11 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
+using JetBrains.Annotations;
 
 namespace KDLib
 {
+  [PublicAPI]
   public static class ReflectionExtensions
   {
     public static bool IsGenericList(this Type type)

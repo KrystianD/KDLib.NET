@@ -1,7 +1,9 @@
 using System.Runtime.InteropServices;
+using JetBrains.Annotations;
 
 namespace KDLib
 {
+  [PublicAPI]
   public static class BinaryUtils
   {
     public static int StructSize<T>() => Marshal.SizeOf(typeof(T));

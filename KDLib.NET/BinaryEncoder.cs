@@ -1,4 +1,5 @@
 using System;
+using JetBrains.Annotations;
 
 namespace KDLib
 {
@@ -8,6 +9,7 @@ namespace KDLib
     Base62,
   }
 
+  [PublicAPI]
   public static class BinaryEncoder
   {
     public static string Encode(byte[] data, BinaryEncoding encoding)

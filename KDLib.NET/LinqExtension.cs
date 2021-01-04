@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 
 namespace KDLib
 {
+  [PublicAPI]
   public static class LinqExtension
   {
     public static string JoinString(this IEnumerable<string> source, string separator = "")

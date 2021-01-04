@@ -1,7 +1,9 @@
 using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace KDLib
 {
+  [PublicAPI]
   public static class Algorithms
   {
     public static IEnumerable<T[]> Combinations<T>(params IList<T>[] lists)

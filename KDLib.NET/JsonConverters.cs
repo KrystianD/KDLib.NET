@@ -1,5 +1,6 @@
 using System;
 using System.Globalization;
+using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -7,6 +8,7 @@ namespace KDLib
 {
   namespace JsonConverters
   {
+    [PublicAPI]
     public class DateFormatJsonConverter : IsoDateTimeConverter
     {
       public DateFormatJsonConverter(string format)
@@ -21,6 +23,7 @@ namespace KDLib
       }
     }
 
+    [PublicAPI]
     public class UnixEpochMillisecondsJsonConverter : DateTimeConverterBase
     {
       private static bool IsGenericType(Type type)
@@ -77,6 +80,7 @@ namespace KDLib
       }
     }
 
+    [PublicAPI]
     public class DecimalJsonConverter : JsonConverter
     {
       public override bool CanRead => false;
@@ -97,6 +101,7 @@ namespace KDLib
       }
     }
 
+    [PublicAPI]
     public class AdvancedJsonDateTimeConverter : DateTimeConverterBase
     {
       private readonly Mode _mode;

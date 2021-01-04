@@ -3,9 +3,11 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 
 namespace KDLib
 {
+  [PublicAPI]
   public static class TcpClientConnectAsyncExtensions
   {
     public static Task ConnectAsync(this TcpClient client, string host, int port, TimeSpan timeout)

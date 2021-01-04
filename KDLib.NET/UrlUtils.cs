@@ -5,9 +5,11 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Web;
+using JetBrains.Annotations;
 
 namespace KDLib
 {
+  [PublicAPI]
   public static class UrlUtils
   {
     public static string UrlEncodeKeyValuePairs(NameValueCollection queryData)

@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using Newtonsoft.Json.Linq;
 
 namespace KDLib
 {
+  [PublicAPI]
   public static class JsonUtils
   {
     public static T SortKeys<T>(T original) where T : JToken

@@ -3,9 +3,11 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 
 namespace KDLib
 {
+  [PublicAPI]
   public class SingleThreadSynchronizationContext : SynchronizationContext
   {
     private readonly

@@ -1,8 +1,10 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
+using JetBrains.Annotations;
 
 namespace KDLib
 {
+  [PublicAPI]
   public static class HashUtils
   {
     public static string CalculateMD5Hash(string input)

@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace KDLib
 {
+  [PublicAPI]
   public static class SetUtils
   {
     public static HashSet<T> Union<T>(IEnumerable<T> set1, IEnumerable<T> set2)
