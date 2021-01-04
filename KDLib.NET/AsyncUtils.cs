@@ -108,11 +108,13 @@ namespace KDLib
           async () => {
             using (var semaphore = new SemaphoreSlim(maxRunningTasks)) {
               var tasks = input.Select(async item => {
+                // ReSharper disable once AccessToDisposedClosure
                 await semaphore.WaitAsync();
                 try {
                   return await processor(item);
                 }
                 finally {
+                  // ReSharper disable once AccessToDisposedClosure
                   semaphore.Release();
                 }
               });
@@ -134,9 +136,9 @@ namespace KDLib
                             taskScheduler);
     }
 
-    public static async Task<List<TOutput>> TransformManyAsync<TInput, TOutput>(IList<TInput> input, int itemsPerTask, int maxRunningTasks,
-                                                                                Func<IEnumerable<TInput>, Task<IEnumerable<TOutput>>> processor,
-                                                                                TaskScheduler taskScheduler = null)
+    public static async Task<List<TOutput>> TransformInChunksAsync<TInput, TOutput>(IList<TInput> input, int itemsPerTask, int maxRunningTasks,
+                                                                                    Func<IEnumerable<TInput>, Task<IEnumerable<TOutput>>> processor,
+                                                                                    TaskScheduler taskScheduler = null)
     {
       var chunks = new List<IEnumerable<TInput>>();
 
