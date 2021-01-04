@@ -125,6 +125,15 @@ namespace KDLib
           taskScheduler).Unwrap();
     }
 
+    public static Task<List<KeyValuePair<TInput, TOutput>>> TransformMapAsync<TInput, TOutput>(IEnumerable<TInput> input, int maxRunningTasks,
+                                                                                               Func<TInput, Task<TOutput>> processor,
+                                                                                               TaskScheduler taskScheduler = null)
+    {
+      return TransformAsync(input, maxRunningTasks,
+                            async val => new KeyValuePair<TInput, TOutput>(val, await processor(val)),
+                            taskScheduler);
+    }
+
     public static async Task<List<TOutput>> TransformManyAsync<TInput, TOutput>(IList<TInput> input, int itemsPerTask, int maxRunningTasks,
                                                                                 Func<IEnumerable<TInput>, Task<IEnumerable<TOutput>>> processor,
                                                                                 TaskScheduler taskScheduler = null)
