@@ -5,8 +5,6 @@ using System.Threading.Tasks;
 
 namespace KDLib
 {
-  public class StreamClosedException : Exception { }
-
   public static class StreamExtensions
   {
     public static int ReadAll(this Stream s, byte[] buffer, int offset, int count)
@@ -15,7 +13,7 @@ namespace KDLib
       while (read < count) {
         int rd = s.Read(buffer, offset + read, count - read);
         if (rd == 0)
-          throw new StreamClosedException();
+          throw new EndOfStreamException();
 
         read += rd;
       }
@@ -31,7 +29,7 @@ namespace KDLib
       while (read < count) {
         int rd = await s.ReadAsync(buffer, offset + read, count - read, token);
         if (rd == 0)
-          throw new StreamClosedException();
+          throw new EndOfStreamException();
 
         read += rd;
       }
