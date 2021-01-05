@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <LangVersion>7.2</LangVersion>
+    <LangVersion>8</LangVersion>
     <RootNamespace>KDLib</RootNamespace>
-    <Version>0.3.11.0</Version>
+    <Version>0.3.12.0</Version>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="2020.3.0" />
