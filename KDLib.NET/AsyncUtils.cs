@@ -108,21 +108,21 @@ namespace KDLib
 
       return await Task.Factory.StartNew(
           async () => {
-            using (var semaphore = new SemaphoreSlim(maxRunningTasks)) {
-              var tasks = input.Select(async item => {
+            using var semaphore = new SemaphoreSlim(maxRunningTasks);
+            
+            var tasks = input.Select(async item => {
+              // ReSharper disable once AccessToDisposedClosure
+              await semaphore.WaitAsync();
+              try {
+                return await processor(item);
+              }
+              finally {
                 // ReSharper disable once AccessToDisposedClosure
-                await semaphore.WaitAsync();
-                try {
-                  return await processor(item);
-                }
-                finally {
-                  // ReSharper disable once AccessToDisposedClosure
-                  semaphore.Release();
-                }
-              });
+                semaphore.Release();
+              }
+            });
 
-              return (await Task.WhenAll(tasks)).ToList();
-            }
+            return (await Task.WhenAll(tasks)).ToList();
           },
           CancellationToken.None,
           TaskCreationOptions.None,
