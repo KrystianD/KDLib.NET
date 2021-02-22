@@ -7,6 +7,7 @@ using JetBrains.Annotations;
 
 namespace KDLib
 {
+#if !NET5_0
   [PublicAPI]
   public static class TcpClientConnectAsyncExtensions
   {
@@ -56,4 +57,5 @@ namespace KDLib
     public static Task ConnectAsync(this TcpClient client, IPAddress address, int port, TimeSpan timeout, CancellationToken cancellationToken)
       => client.ConnectAsync(address.ToString(), port, timeout, cancellationToken);
   }
+#endif
 }

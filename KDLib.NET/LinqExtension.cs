@@ -38,10 +38,12 @@ namespace KDLib
       return !values.Contains(t);
     }
 
+#if NETSTANDARD2_0 || NETSTANDARD2_1
     public static IEnumerable<(TFirst, TSecond)> Zip<TFirst, TSecond>(this IEnumerable<TFirst> first, IEnumerable<TSecond> second)
     {
       return first.Zip(second, (a, b) => (a, b));
     }
+#endif
 
     public static Dictionary<TKey, List<TValue>> GroupByToDictionary<TValue, TKey>(this IEnumerable<TValue> seq, Func<TValue, TKey> key)
     {

@@ -5,6 +5,7 @@ using Xunit;
 
 namespace KDLib.NET.Tests
 {
+#if !NET5_0
   public class TcpClientExtensionsTests
   {
     [Fact]
@@ -35,4 +36,5 @@ namespace KDLib.NET.Tests
       await Assert.ThrowsAsync<OperationCanceledException>(() => client2.ConnectAsync("8.8.8.7", 53, TimeSpan.FromMilliseconds(2000), c.Token));
     }
   }
+#endif
 }
