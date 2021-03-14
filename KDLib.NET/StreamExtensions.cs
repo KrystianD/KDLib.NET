@@ -8,6 +8,7 @@ namespace KDLib
   [PublicAPI]
   public static class StreamExtensions
   {
+    // ReadAll
     public static int ReadAll(this Stream s, byte[] buffer, int offset, int count)
     {
       int read = 0;
@@ -54,6 +55,7 @@ namespace KDLib
 
     public static Task<byte[]> ReadAllAsync(this Stream s, int count) => s.ReadAllAsync(count, CancellationToken.None);
 
+    // Struct
     public static T ReadStruct<T>(this Stream s)
     {
       byte[] bytes = new byte[BinaryUtils.StructSize<T>()];
