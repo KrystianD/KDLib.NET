@@ -10,7 +10,7 @@ namespace KDLib
   {
     public static string JoinString(this IEnumerable<string> source, string separator = "")
     {
-      return string.Join(separator, source.ToList());
+      return string.Join(separator, source);
     }
 
     public static string JoinString(this IEnumerable<char> source, string separator = "")
