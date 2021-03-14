@@ -22,6 +22,13 @@ namespace KDLib
       return read;
     }
 
+    public static byte[] ReadAll(this Stream s, int count)
+    {
+      byte[] bytes = new byte[count];
+      s.ReadAll(bytes, 0, count);
+      return bytes;
+    }
+
     public static Task<int> ReadAllAsync(this Stream s, byte[] buffer, int offset, int count) => s.ReadAllAsync(buffer, offset, count, CancellationToken.None);
 
     public static async Task<int> ReadAllAsync(this Stream s, byte[] buffer, int offset, int count, CancellationToken token)
@@ -36,6 +43,13 @@ namespace KDLib
       }
 
       return read;
+    }
+
+    public static async Task<byte[]> ReadAllAsync(this Stream s, int count)
+    {
+      byte[] bytes = new byte[count];
+      await s.ReadAllAsync(bytes, 0, count);
+      return bytes;
     }
 
     public static T ReadStruct<T>(this Stream s)
