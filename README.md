@@ -55,6 +55,7 @@ Supports net5.0, netstandard2.1 and netstandard2.0
 * Set helpers - union, intersect, etc,
 * Stream extensions - read all, reading/writing structs,
 * String utils - random string generation,
+* Global extensions - Kotlin-like Let construct,
 * TCP client extensions - cancellation-enabled ConnectAsync for pre .NET 5.0,
 * URI extensions - getting username/password from URI,
 * URL utils - URL-encoding, creating/extending URLs, parsing URIs,
