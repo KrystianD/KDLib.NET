@@ -54,6 +54,7 @@ Supports net5.0, netstandard2.1 and netstandard2.0
 * Reflection utils and extensions,
 * Set helpers - union, intersect, etc,
 * Stream extensions - read all, reading/writing structs,
+* SynchronizationContext extensions - simple Post and PostWaitAsync,
 * String utils - random string generation,
 * Global extensions - Kotlin-like Let construct,
 * TCP client extensions - cancellation-enabled ConnectAsync for pre .NET 5.0,
