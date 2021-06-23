@@ -56,6 +56,7 @@ Supports net5.0, netstandard2.1 and netstandard2.0
 * Stream extensions - read all, reading/writing structs,
 * SynchronizationContext extensions - simple Post and PostWaitAsync,
 * String utils - random string generation,
+* Compression utils - simple gzip compress/decompress methods,
 * Global extensions - Kotlin-like Let construct,
 * TCP client extensions - cancellation-enabled ConnectAsync for pre .NET 5.0,
 * URI extensions - getting username/password from URI,
