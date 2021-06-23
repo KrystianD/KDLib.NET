@@ -24,12 +24,6 @@ namespace KDLib
       return new string(stringChars);
     }
 
-    public static string BinaryToHex(IEnumerable<byte> data)
-    {
-      StringBuilder sb = new StringBuilder();
-      foreach (var t in data)
-        sb.Append(t.ToString("x2"));
-      return sb.ToString();
-    }
+    public static string BinaryToHex(IEnumerable<byte> data) => BinaryEncoder.Encode(data, BinaryEncoding.Hex);
   }
 }
