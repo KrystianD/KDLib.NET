@@ -50,7 +50,13 @@ namespace KDLib.NET.Tests
       public long ValLong;
       public ulong ValUlong;
       public float ValFloat;
-      public double ValDouble;
+      private double _valDouble;
+      
+      public double ValDouble
+      {
+        get => _valDouble;
+        init => _valDouble = value;
+      }
     }
 
     [Fact]

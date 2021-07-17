@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using JetBrains.Annotations;
 
@@ -77,7 +78,7 @@ namespace KDLib
     [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
     public static void SwapStructureEndianness<T>(ref T obj)
     {
-      foreach (var fi in typeof(T).GetFields()) {
+      foreach (var fi in typeof(T).GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)) {
         switch (fi.GetValue(obj)) {
           case short v:
             fi.SetValueDirect(__makeref(obj), SwapBytes(v));
