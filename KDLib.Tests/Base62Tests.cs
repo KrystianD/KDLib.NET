@@ -1,6 +1,6 @@
 using Xunit;
 
-namespace KDLib.NET.Tests
+namespace KDLib.Tests
 {
   public class Base62Tests
   {

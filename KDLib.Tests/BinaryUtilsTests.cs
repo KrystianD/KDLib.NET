@@ -2,7 +2,7 @@
 using System.Linq;
 using Xunit;
 
-namespace KDLib.NET.Tests
+namespace KDLib.Tests
 {
   // ReSharper disable RedundantCast
   public class BinaryUtilsTests

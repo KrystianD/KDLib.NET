@@ -3,7 +3,7 @@ using System.Net.Sockets;
 using System.Threading;
 using Xunit;
 
-namespace KDLib.NET.Tests
+namespace KDLib.Tests
 {
 #if !NET5_0
   public class TcpClientExtensionsTests

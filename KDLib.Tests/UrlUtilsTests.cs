@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Xunit;
 
-namespace KDLib.NET.Tests
+namespace KDLib.Tests
 {
   public class UrlUtilsTests
   {

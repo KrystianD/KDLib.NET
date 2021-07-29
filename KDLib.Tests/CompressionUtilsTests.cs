@@ -3,7 +3,7 @@ using System.Linq;
 using System.Text;
 using Xunit;
 
-namespace KDLib.NET.Tests
+namespace KDLib.Tests
 {
   public class CompressionUtilsTests
   {

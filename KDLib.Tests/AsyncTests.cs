@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace KDLib.NET.Tests
+namespace KDLib.Tests
 {
   public class AsyncTests
   {

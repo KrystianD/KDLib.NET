@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Xunit;
 
-namespace KDLib.NET.Tests
+namespace KDLib.Tests
 {
   public class JsonUtilsTests
   {

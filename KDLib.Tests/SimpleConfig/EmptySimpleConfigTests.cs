@@ -2,7 +2,7 @@ using System;
 using KDLib.SimpleConfig;
 using Xunit;
 
-namespace KDLib.NET.Tests
+namespace KDLib.Tests
 {
   public class EmptySimpleConfigTests
   {
