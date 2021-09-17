@@ -75,6 +75,14 @@ namespace KDLib
 #endif
     public static double SwapBytes(double x) => BitConverter.Int64BitsToDouble(SwapBytes(BitConverter.DoubleToInt64Bits(x)));
 
+    public static byte ReverseBits(byte n)
+    {
+      n = (byte)(((n << 4) & 0xf0) | ((n >> 4) & 0x0f));
+      n = (byte)(((n << 2) & 0xcc) | ((n >> 2) & 0x33));
+      n = (byte)(((n << 1) & 0xaa) | ((n >> 1) & 0x55));
+      return n;
+    }
+
     [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
     public static void SwapStructureEndianness<T>(ref T obj)
     {

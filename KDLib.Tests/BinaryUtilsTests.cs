@@ -51,7 +51,7 @@ namespace KDLib.Tests
       public ulong ValUlong;
       public float ValFloat;
       private double _valDouble;
-      
+
       public double ValDouble
       {
         get => _valDouble;
@@ -83,6 +83,16 @@ namespace KDLib.Tests
       Assert.Equal(BinaryUtils.SwapBytes((ulong)1234), v.ValUlong);
       Assert.Equal(BinaryUtils.SwapBytes((float)1234.0f), v.ValFloat);
       Assert.Equal(BinaryUtils.SwapBytes((double)1234.0), v.ValDouble);
+    }
+
+    [Fact]
+    public void ReverseBitsTest()
+    {
+      static byte ReverseViaString(byte x) => (byte)Convert.ToByte(Convert.ToString(x, 2).PadLeft(sizeof(byte) * 8, '0').Reverse().JoinString(), 2);
+
+      for (int i = 0; i < 256; i++) {
+        Assert.Equal(ReverseViaString((byte)i), BinaryUtils.ReverseBits((byte)i));
+      }
     }
   }
 }
