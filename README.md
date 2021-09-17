@@ -17,6 +17,7 @@ Supports net5.0, netstandard2.1 and netstandard2.0
 * Binary encoder (base64, base62, hex),
 * Big endian helpers - `BinaryWriter`/`BinaryReader` extensions, swap bytes, reverse bits and swap structure endianness helpers,
 * Native structures serialization helpers,
+* `BitReader` - for reading non byte-aligned numbers from a byte stream,
   
 #### JSON
 
