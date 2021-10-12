@@ -72,5 +72,20 @@ namespace KDLib
       public bool Equals(T x, T y) => _lookup(x).Equals(_lookup(y));
       public int GetHashCode(T obj) => _lookup(obj).GetHashCode();
     }
+
+    public static IEnumerable<TSource> AggregatingTakeWhile<TSource, TAccumulate>(
+        this IEnumerable<TSource> items,
+        TAccumulate first,
+        Func<TSource, TAccumulate, TAccumulate> aggregator,
+        Func<TSource, TAccumulate, bool> predicate)
+    {
+      var accumulator = first;
+      foreach (var item in items) {
+        accumulator = aggregator(item, accumulator);
+        if (!predicate(item, accumulator))
+          yield break;
+        yield return item;
+      }
+    }
   }
 }
