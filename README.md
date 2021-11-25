@@ -46,6 +46,11 @@ Supports net5.0, netstandard2.1 and netstandard2.0
 
 * `SingleThreadSynchronizationContext` - single-threaded main event loop (similar to Python asyncio and Node.JS main loop),
 
+#### Subprocess / shell
+
+* Shell utils - escaping command arguments,
+* `Subprocess` - easy way to start processes and capture their output,
+
 #### Other utilities
 
 * Algorithms - combinations,
