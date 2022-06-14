@@ -51,9 +51,10 @@ root:
     [Fact]
     public void TestLoadFile()
     {
-      File.WriteAllText("/tmp/kdlib_test.yaml", YamlString);
-      var cfg = (ISimpleConfig) YamlSimpleConfig.FromFile("/tmp/kdlib_test.yaml");
-      File.Delete("/tmp/kdlib_test.yaml");
+      var tmpPath = $"{Path.GetTempFileName()}.yaml";
+      File.WriteAllText(tmpPath, YamlString);
+      var cfg = (ISimpleConfig)YamlSimpleConfig.FromFile(tmpPath);
+      File.Delete(tmpPath);
 
       var pathRel = cfg.GetOptionAsPath("root.path_rel");
       Assert.Equal("/tmp/a.txt", pathRel);
