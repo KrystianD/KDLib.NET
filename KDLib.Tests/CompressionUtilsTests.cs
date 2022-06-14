@@ -14,7 +14,7 @@ namespace KDLib.Tests
       var data = Encoding.ASCII.GetBytes(s);
 
       var compressed = CompressionUtils.CompressGzip(data, CompressionLevel.Fastest);
-      var compressedHash = HashUtils.CalculateHashHex(hashType.MD5, compressed);
+      var compressedHash = HashUtils.CalculateHashHex(HashType.MD5, compressed);
       Assert.Equal("aeb490cdc02fb9a0be1d8e78f5caaeaa", compressedHash);
 
       var decompressed = CompressionUtils.DecompressGzip(compressed);

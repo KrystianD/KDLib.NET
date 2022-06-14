@@ -55,7 +55,7 @@ Supports net5.0, netstandard2.1 and netstandard2.0
 
 * Algorithms - combinations,
 * Enum traits - eg. getting enum by value,
-* Hash utils - quick MD5/SHA256 hash,
+* Hash utils - quick MD5, SHA1, SHA256, SHA384 and SHA512 hash (raw + hex),
 * LINQ extensions - joining to string, In/NotIn checkers, grouping utils, customizable distinct, aggregation,
 * Reflection utils and extensions,
 * Set helpers - union, intersect, etc,
