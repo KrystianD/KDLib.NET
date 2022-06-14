@@ -7,6 +7,10 @@ Supports net5.0, netstandard2.1 and netstandard2.0
 
 ### Includes
 
+#### Collections
+
+* BiMultiMap - bidirectional map (N:N),
+
 #### Configuration
 
 * Simple (and stacked) YAML-based config class,
