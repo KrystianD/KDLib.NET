@@ -7,14 +7,14 @@ namespace KDLib.Tests
   // ReSharper disable RedundantCast
   public class BinaryUtilsTests
   {
-    void AssertSwap(short v) => Assert.Equal(BitConverter.ToInt16(BitConverter.GetBytes(v).Reverse().ToArray()), BinaryUtils.SwapBytes(v));
-    void AssertSwap(ushort v) => Assert.Equal(BitConverter.ToUInt16(BitConverter.GetBytes(v).Reverse().ToArray()), BinaryUtils.SwapBytes(v));
-    void AssertSwap(int v) => Assert.Equal(BitConverter.ToInt32(BitConverter.GetBytes(v).Reverse().ToArray()), BinaryUtils.SwapBytes(v));
-    void AssertSwap(uint v) => Assert.Equal(BitConverter.ToUInt32(BitConverter.GetBytes(v).Reverse().ToArray()), BinaryUtils.SwapBytes(v));
-    void AssertSwap(long v) => Assert.Equal(BitConverter.ToInt64(BitConverter.GetBytes(v).Reverse().ToArray()), BinaryUtils.SwapBytes(v));
-    void AssertSwap(ulong v) => Assert.Equal(BitConverter.ToUInt64(BitConverter.GetBytes(v).Reverse().ToArray()), BinaryUtils.SwapBytes(v));
-    void AssertSwap(float v) => Assert.Equal(BitConverter.ToSingle(BitConverter.GetBytes(v).Reverse().ToArray()), BinaryUtils.SwapBytes(v));
-    void AssertSwap(double v) => Assert.Equal(BitConverter.ToDouble(BitConverter.GetBytes(v).Reverse().ToArray()), BinaryUtils.SwapBytes(v));
+    void AssertSwap(short v) => Assert.Equal(BitConverter.ToInt16(BitConverter.GetBytes(v).Reverse().ToArray(), 0), BinaryUtils.SwapBytes(v));
+    void AssertSwap(ushort v) => Assert.Equal(BitConverter.ToUInt16(BitConverter.GetBytes(v).Reverse().ToArray(), 0), BinaryUtils.SwapBytes(v));
+    void AssertSwap(int v) => Assert.Equal(BitConverter.ToInt32(BitConverter.GetBytes(v).Reverse().ToArray(), 0), BinaryUtils.SwapBytes(v));
+    void AssertSwap(uint v) => Assert.Equal(BitConverter.ToUInt32(BitConverter.GetBytes(v).Reverse().ToArray(), 0), BinaryUtils.SwapBytes(v));
+    void AssertSwap(long v) => Assert.Equal(BitConverter.ToInt64(BitConverter.GetBytes(v).Reverse().ToArray(), 0), BinaryUtils.SwapBytes(v));
+    void AssertSwap(ulong v) => Assert.Equal(BitConverter.ToUInt64(BitConverter.GetBytes(v).Reverse().ToArray(), 0), BinaryUtils.SwapBytes(v));
+    void AssertSwap(float v) => Assert.Equal(BitConverter.ToSingle(BitConverter.GetBytes(v).Reverse().ToArray(), 0), BinaryUtils.SwapBytes(v));
+    void AssertSwap(double v) => Assert.Equal(BitConverter.ToDouble(BitConverter.GetBytes(v).Reverse().ToArray(), 0), BinaryUtils.SwapBytes(v));
 
     [Fact]
     public void SwapShortTest()
@@ -55,7 +55,7 @@ namespace KDLib.Tests
       public double ValDouble
       {
         get => _valDouble;
-        init => _valDouble = value;
+        set => _valDouble = value;
       }
     }
 

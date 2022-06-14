@@ -7,7 +7,7 @@ namespace KDLib.Tests
   // ReSharper disable RedundantCast
   public class BitReaderTests
   {
-    private static BitReader CreateReader(params byte[] data) => new(new MemoryStream(data));
+    private static BitReader CreateReader(params byte[] data) => new BitReader(new MemoryStream(data));
 
     [Fact]
     public void TestByte()
