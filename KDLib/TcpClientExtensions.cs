@@ -7,7 +7,7 @@ using JetBrains.Annotations;
 
 namespace KDLib
 {
-#if !NET5_0
+#if !NET5_0 && !NET6_0
   [PublicAPI]
   public static class TcpClientConnectAsyncExtensions
   {

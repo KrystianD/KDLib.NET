@@ -5,7 +5,7 @@ using Xunit;
 
 namespace KDLib.Tests
 {
-#if !NET5_0
+#if !NET5_0 && !NET6_0
   public class TcpClientExtensionsTests
   {
     [Fact]
