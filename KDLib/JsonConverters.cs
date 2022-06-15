@@ -195,7 +195,13 @@ namespace KDLib
         else if (_mode.HasFlag(Mode.WithOffset))
           format += "zzz";
 
-        var dateOffset = DateTimeOffset.ParseExact(input, format, CultureInfo.InvariantCulture);
+        DateTimeOffset dateOffset;
+        try {
+          dateOffset = DateTimeOffset.ParseExact(input, format, CultureInfo.InvariantCulture);
+        }
+        catch (FormatException e) {
+          throw new JsonSerializationException(e.Message);
+        }
 
         // workaroud: DateTimeOffset.ParseExact parses date without an offset (2345-10-20 12:34) as local dates with UTC variant off by local offset
         var date = _mode.HasFlag(Mode.WithOffset) ? dateOffset.UtcDateTime : dateOffset.DateTime;

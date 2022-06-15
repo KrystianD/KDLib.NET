@@ -135,5 +135,13 @@ namespace KDLib.Tests
           date_t_utc_z = "2345-10-20T12:34Z",
       }).date_t_utc_z);
     }
+
+    [Fact]
+    public void DateError()
+    {
+      Assert.Throws<JsonSerializationException>(() => ParseJson(new {
+          date_t_utc = "2345-10-20 12:34", // invalid format
+      }).date_t_utc);
+    }
   }
 }
