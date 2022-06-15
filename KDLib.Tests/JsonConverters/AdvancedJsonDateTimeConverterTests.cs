@@ -4,9 +4,9 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Xunit;
 
-namespace KDLib.Tests
+namespace KDLib.Tests.JsonConverters
 {
-  public class JsonConvertersTests
+  public class AdvancedJsonDateTimeConverterTests
   {
     public class Model
     {
