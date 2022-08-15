@@ -1,4 +1,4 @@
-#if NET5_0
+#if NET5_0 || NET6_0
 using System;
 using System.Diagnostics;
 using System.IO;
