@@ -1,5 +1,6 @@
 #if NET5_0 || NET6_0
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -48,6 +49,25 @@ namespace KDLib
     {
       _psi.ArgumentList.Add(value1);
       _psi.ArgumentList.Add(value2.ToString());
+      return this;
+    }
+
+    public SubprocessBuilder Environment(string name, string value)
+    {
+      _psi.Environment.Add(name, value);
+      return this;
+    }
+
+    public SubprocessBuilder Environment(string name, int value)
+    {
+      _psi.Environment.Add(name, value.ToString());
+      return this;
+    }
+
+    public SubprocessBuilder Environment(IDictionary<string, string> values)
+    {
+      foreach (var (name, value) in values)
+        _psi.Environment.Add(name, value);
       return this;
     }
 
