@@ -71,4 +71,5 @@ Supports net6.0, net5.0, netstandard2.1 and netstandard2.0
 * TCP client extensions - cancellation-enabled ConnectAsync for pre .NET 5.0,
 * URI extensions - getting username/password from URI,
 * URL utils - URL-encoding, creating/extending URLs, parsing URIs,
-* Miscellaneous - waiting for task completion with logging.
+* Miscellaneous - waiting for task completion with logging,
+* DateTime extensions - to DateOnly.
