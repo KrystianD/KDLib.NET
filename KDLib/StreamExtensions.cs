@@ -55,6 +55,39 @@ namespace KDLib
 
     public static Task<byte[]> ReadAllAsync(this Stream s, int count) => s.ReadAllAsync(count, CancellationToken.None);
 
+    // ReadToEnd
+    public static byte[] ReadToEnd(this Stream s, int chunkSize = 100 * 1024)
+    {
+      var ms = new MemoryStream();
+      var buffer = new byte[chunkSize];
+
+      while (true) {
+        int rd = s.Read(buffer, 0, buffer.Length);
+        if (rd == 0)
+          break;
+
+        ms.Write(buffer, 0, rd);
+      }
+
+      return ms.ToArray();
+    }
+
+    public static async Task<byte[]> ReadToEndAsync(this Stream s, int chunkSize = 100 * 1024)
+    {
+      var ms = new MemoryStream();
+      var buffer = new byte[chunkSize];
+
+      while (true) {
+        int rd = await s.ReadAsync(buffer, 0, buffer.Length);
+        if (rd == 0)
+          break;
+
+        ms.Write(buffer, 0, rd);
+      }
+
+      return ms.ToArray();
+    }
+
     // Struct
     public static T ReadStruct<T>(this Stream s)
     {
