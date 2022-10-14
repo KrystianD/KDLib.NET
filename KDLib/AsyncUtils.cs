@@ -138,18 +138,12 @@ namespace KDLib
                             taskScheduler);
     }
 
-    public static async Task<List<TOutput>> TransformInChunksAsync<TInput, TOutput>(IList<TInput> input, int itemsPerTask, int maxRunningTasks,
-                                                                                    Func<IEnumerable<TInput>, Task<IEnumerable<TOutput>>> processor,
+    public static async Task<List<TOutput>> TransformInChunksAsync<TInput, TOutput>(IEnumerable<TInput> input, int itemsPerTask, int maxRunningTasks,
+                                                                                    Func<IReadOnlyList<TInput>, Task<List<TOutput>>> processor,
                                                                                     TaskScheduler taskScheduler = null)
     {
-      var chunks = new List<IEnumerable<TInput>>();
-
-      for (int i = 0; i < input.Count; i += itemsPerTask)
-        chunks.Add(input.Skip(i).Take(itemsPerTask));
-
-      var res = await TransformAsync<IEnumerable<TInput>, IEnumerable<TOutput>>(chunks, maxRunningTasks, processor,
-                                                                                taskScheduler: taskScheduler);
-
+      var chunks = input.Chunk(itemsPerTask);
+      var res = await TransformAsync(chunks, maxRunningTasks, processor, taskScheduler: taskScheduler);
       return res.SelectMany(x => x).ToList();
     }
   }
