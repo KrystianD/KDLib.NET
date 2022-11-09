@@ -7,7 +7,7 @@ using Newtonsoft.Json.Converters;
 namespace KDLib.JsonConverters
 {
   [PublicAPI]
-  public class AdvancedJsonDateTimeConverter : DateTimeConverterBase
+  public class AdvancedJsonDateTimeConverter : BaseDateTimeConverter
   {
     private readonly Mode _mode;
 
@@ -28,11 +28,6 @@ namespace KDLib.JsonConverters
     public override bool CanRead => true;
     public override bool CanWrite => false;
 
-    public override bool CanConvert(Type objectType)
-    {
-      return objectType == typeof(DateTime) || objectType == typeof(DateTime?);
-    }
-
     public AdvancedJsonDateTimeConverter(Mode mode)
     {
       if (mode.HasFlag(Mode.SeparatorT) && mode.HasFlag(Mode.SeparatorSpace))
@@ -49,34 +44,7 @@ namespace KDLib.JsonConverters
       _mode = mode;
     }
 
-    public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-    {
-      throw new NotSupportedException();
-    }
-
-    public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
-    {
-      bool flag = IsNullableType(objectType);
-      if (reader.TokenType == JsonToken.Null) {
-        if (!flag)
-          throw new JsonSerializationException($"Cannot convert null value to {objectType}.");
-        return null;
-      }
-
-      if (reader.TokenType == JsonToken.Date)
-        throw new Exception("Disable dates parsing with \"new JsonSerializerSettings { DateParseHandling = DateParseHandling.None }\"");
-
-      if (reader.TokenType != JsonToken.String)
-        throw new JsonSerializationException($"Unexpected token parsing date. Expected String, got {reader.TokenType}.");
-
-      string str = (string)reader.Value;
-      if (string.IsNullOrEmpty(str) & flag)
-        return null;
-
-      return Convert(str);
-    }
-
-    private DateTime Convert(string input)
+    protected override DateTime ParseFromString(string input)
     {
       string format = "yyyy-MM-dd";
 
@@ -116,7 +84,9 @@ namespace KDLib.JsonConverters
       return DateTime.SpecifyKind(date, targetKind);
     }
 
-    private static bool IsGenericType(Type type) => type.IsGenericType;
-    private static bool IsNullableType(Type t) => IsGenericType(t) && t.GetGenericTypeDefinition() == typeof(Nullable<>);
+    protected override string FormatToString(DateTime datetime)
+    {
+      throw new NotSupportedException();
+    }
   }
 }
