@@ -49,7 +49,7 @@ namespace KDLib.JsonConverters
       }
 
       if (reader.TokenType != JsonToken.Integer && reader.TokenType != JsonToken.String)
-        throw new JsonSerializationException(string.Format("Unexpected token parsing date. Expected Integer or String, got {0}.", reader.TokenType));
+        throw new JsonSerializationException($"Unexpected token when parsing date. Expected Integer or String, got {reader.TokenType}.");
       string str = reader.Value.ToString();
       if (string.IsNullOrEmpty(str) & flag)
         return null;

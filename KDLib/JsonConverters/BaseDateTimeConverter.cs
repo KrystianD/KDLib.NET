@@ -29,7 +29,7 @@ namespace KDLib.JsonConverters
         throw new Exception("Disable dates parsing with \"new JsonSerializerSettings { DateParseHandling = DateParseHandling.None }\"");
 
       if (reader.TokenType != JsonToken.String)
-        throw new JsonSerializationException($"Unexpected token parsing date. Expected String, got {reader.TokenType}.");
+        throw new JsonSerializationException($"Unexpected token when parsing date. Expected String, got {reader.TokenType}.");
 
       string str = (string)reader.Value;
       if (string.IsNullOrEmpty(str) && isNullableType)
