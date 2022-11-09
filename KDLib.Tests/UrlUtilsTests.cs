@@ -8,7 +8,7 @@ namespace KDLib.Tests
     [Fact]
     public void CreateURLEmpty()
     {
-      var url = UrlUtils.CreateUrl("http://test.com", (Dictionary<string, string>) null);
+      var url = UrlUtils.CreateUrl("http://test.com", (Dictionary<string, string>)null);
       Assert.Equal("http://test.com", url);
     }
 

@@ -117,7 +117,7 @@ namespace KDLib.Tests
     {
       var obj1 = JObject.FromObject(new {
           a = 1,
-          b = (string) null,
+          b = (string)null,
           c = "",
           d = 2,
           e = new[] {
@@ -127,8 +127,7 @@ namespace KDLib.Tests
                   h = new int[] { },
               }
           },
-          i = new {
-          }
+          i = new { }
       });
       var obj1cleaned = JsonUtils.CleanJObject(obj1);
       var obj1expected = JObject.FromObject(new {
@@ -145,19 +144,18 @@ namespace KDLib.Tests
 
 
       var obj2 = JArray.FromObject(new object[] {
-              new {
-              },
-              new {
-                      f = 3,
-                      g = "",
-                      h = new int[] { },
-              }
+          new { },
+          new {
+              f = 3,
+              g = "",
+              h = new int[] { },
+          }
       });
       var obj2cleaned = JsonUtils.CleanJArray(obj2);
       var obj2expected = JArray.FromObject(new object[] {
-              new {
-                      f = 3,
-              }
+          new {
+              f = 3,
+          }
       });
 
       Assert.Equal(obj2expected, obj2cleaned);

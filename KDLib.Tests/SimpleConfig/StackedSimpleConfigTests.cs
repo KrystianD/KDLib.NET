@@ -79,7 +79,7 @@ val4: third-val4
       var stacked2 = new StackedSimpleConfig();
 
       Assert.Throws<ArgumentException>(() => stacked.AddConfig(stacked2));
-      
+
       Assert.Throws<InvalidOperationException>(() => stacked.ConfigDirectory);
     }
   }

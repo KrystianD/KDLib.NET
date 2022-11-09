@@ -15,14 +15,14 @@ Supports net6.0, net5.0, netstandard2.1 and netstandard2.0
 
 * Simple (and stacked) YAML-based config class,
 
-#### Binary utils  
+#### Binary utils
 
 * Base62 encoder,
 * Binary encoder (base64, base62, hex),
 * Big endian helpers - `BinaryWriter`/`BinaryReader` extensions, swap bytes, reverse bits and swap structure endianness helpers,
 * Native structures serialization helpers,
 * `BitReader` - for reading non byte-aligned numbers from a byte stream,
-  
+
 #### JSON
 
 * Newtonsoft.Json converters:
@@ -41,13 +41,13 @@ Supports net6.0, net5.0, netstandard2.1 and netstandard2.0
   * `WaitFutureTimeout` - waiting for task completion with timeout,
   * `FastCancellableTask` - to stop waiting for non-cancellable task,
   * `WaitAll` - for easy values retrieval when waiting on multiple tasks,
-  
+
 
 * Async transformations
   * `TransformAsync` - transform input to output with max running tasks limit,
   * `TransformMapAsync` - mapping input to output with max running tasks limit,
   * `TransformInChunksAsync` - transform input to output in chunks with max running tasks limit,
-  
+
 
 * `SingleThreadSynchronizationContext` - single-threaded main event loop (similar to Python asyncio and Node.JS main loop),
 

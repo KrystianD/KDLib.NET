@@ -6,9 +6,7 @@ namespace KDLib.SimpleConfig
   {
     public override string ConfigDirectory => throw new InvalidOperationException();
 
-    internal EmptySimpleConfig()
-    {
-    }
+    internal EmptySimpleConfig() { }
 
     public override bool TryGetOption<T>(string path, out T val)
     {

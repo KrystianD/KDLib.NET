@@ -49,7 +49,7 @@ namespace KDLib.SimpleConfig
 
     private YamlNode GetConfigNode(string path)
     {
-      var curNode = (YamlNode) _node;
+      var curNode = (YamlNode)_node;
       foreach (var p in path.Split('.')) {
         if (curNode is YamlMappingNode n) {
           if (!n.Children.TryGetValue(p, out curNode))
@@ -82,7 +82,7 @@ namespace KDLib.SimpleConfig
       var yaml = new YamlStream();
       using (var reader = new StringReader(yamlStr)) {
         yaml.Load(reader);
-        return (YamlMappingNode) yaml.Documents[0].RootNode;
+        return (YamlMappingNode)yaml.Documents[0].RootNode;
       }
     }
   }

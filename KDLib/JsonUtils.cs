@@ -12,12 +12,12 @@ namespace KDLib
     {
       switch (original) {
         case JObject value:
-          return (T) (object) new JObject(value.Properties()
-                                               .OrderBy(p => p.Name)
-                                               .Select(x => new JProperty(x.Name, SortKeys(x.Value))));
+          return (T)(object)new JObject(value.Properties()
+                                             .OrderBy(p => p.Name)
+                                             .Select(x => new JProperty(x.Name, SortKeys(x.Value))));
 
         case JArray array:
-          return (T) (object) new JArray(array.Select(SortKeys));
+          return (T)(object)new JArray(array.Select(SortKeys));
 
         default:
           return original;
@@ -65,14 +65,14 @@ namespace KDLib
 
     public static JArray CleanJArray(JArray obj)
     {
-      var cloned = (JArray) obj.DeepClone();
+      var cloned = (JArray)obj.DeepClone();
       CleanJTokenReturnIsEmpty(cloned);
       return cloned;
     }
 
     public static JObject CleanJObject(JObject obj)
     {
-      var cloned = (JObject) obj.DeepClone();
+      var cloned = (JObject)obj.DeepClone();
       CleanJTokenReturnIsEmpty(cloned);
       return cloned;
     }

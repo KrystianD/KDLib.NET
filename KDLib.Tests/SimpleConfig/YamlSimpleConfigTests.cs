@@ -26,7 +26,7 @@ root:
     [Fact]
     public void TestLoadString()
     {
-      var cfg = (ISimpleConfig) YamlSimpleConfig.FromString(YamlString);
+      var cfg = (ISimpleConfig)YamlSimpleConfig.FromString(YamlString);
 
       var num = cfg.GetOption<int>("root.num");
       var numS = cfg.GetOption<string>("root.num");

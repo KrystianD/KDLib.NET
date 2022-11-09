@@ -109,7 +109,7 @@ namespace KDLib
       return await Task.Factory.StartNew(
           async () => {
             using var semaphore = new SemaphoreSlim(maxRunningTasks);
-            
+
             var tasks = input.Select(async item => {
               // ReSharper disable once AccessToDisposedClosure
               await semaphore.WaitAsync();
