@@ -26,6 +26,7 @@ namespace KDLib.JsonConverters
       WithOffset = 64,
       AsUnspecified = 128,
       AsUTC = 256,
+      WithRelaxedFractional = 512,
     }
 
     public override bool CanRead => true;
@@ -60,10 +61,22 @@ namespace KDLib.JsonConverters
       if (_mode.HasFlag(Mode.WithSeconds))
         formatParts.Add(new[] { ":ss" });
 
-      if (_mode.HasFlag(Mode.WithMilliseconds3))
-        formatParts.Add(new[] { ".fff" });
-      else if (_mode.HasFlag(Mode.WithMilliseconds6))
-        formatParts.Add(new[] { ".ffffff" });
+      if (_mode.HasFlag(Mode.WithMilliseconds3)) {
+        // ReSharper disable StringLiteralTypo
+        if (_mode.HasFlag(Mode.WithRelaxedFractional))
+          formatParts.Add(new[] { ".f", ".ff", ".fff" });
+        else
+          formatParts.Add(new[] { ".fff" });
+        // ReSharper enable StringLiteralTypo
+      }
+      else if (_mode.HasFlag(Mode.WithMilliseconds6)) {
+        // ReSharper disable StringLiteralTypo
+        if (_mode.HasFlag(Mode.WithRelaxedFractional))
+          formatParts.Add(new[] { ".f", ".ff", ".fff", ".ffff", ".fffff", ".ffffff" });
+        else
+          formatParts.Add(new[] { ".ffffff" });
+        // ReSharper enable StringLiteralTypo
+      }
 
       if (_mode.HasFlag(Mode.WithZ))
         formatParts.Add(new[] { "Z" });

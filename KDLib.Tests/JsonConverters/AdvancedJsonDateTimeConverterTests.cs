@@ -39,6 +39,13 @@ namespace KDLib.Tests.JsonConverters
 
       [JsonConverter(typeof(AdvancedJsonDateTimeConverter), AdvancedJsonDateTimeConverter.Mode.SeparatorT |
                                                             AdvancedJsonDateTimeConverter.Mode.WithSeconds |
+                                                            AdvancedJsonDateTimeConverter.Mode.WithMilliseconds6 |
+                                                            AdvancedJsonDateTimeConverter.Mode.WithRelaxedFractional |
+                                                            AdvancedJsonDateTimeConverter.Mode.WithZ)]
+      public DateTime date_t_seconds_ms6_relaxed_z;
+
+      [JsonConverter(typeof(AdvancedJsonDateTimeConverter), AdvancedJsonDateTimeConverter.Mode.SeparatorT |
+                                                            AdvancedJsonDateTimeConverter.Mode.WithSeconds |
                                                             AdvancedJsonDateTimeConverter.Mode.WithOffset)]
       public DateTime date_t_seconds_tz1;
 
@@ -106,6 +113,29 @@ namespace KDLib.Tests.JsonConverters
       Assert.Equal(CreateDateTime(2345, 10, 20, 12, 34, 56, 123456), ParseJson(new {
           date_t_seconds_ms6_z = "2345-10-20T12:34:56.123456Z",
       }).date_t_seconds_ms6_z);
+    }
+
+    [Fact]
+    public void DateTSecondsMillisecondsZRelaxed()
+    {
+      Assert.Equal(CreateDateTime(2345, 10, 20, 12, 34, 56, 100000), ParseJson(new {
+          date_t_seconds_ms6_relaxed_z = "2345-10-20T12:34:56.1Z",
+      }).date_t_seconds_ms6_relaxed_z);
+      Assert.Equal(CreateDateTime(2345, 10, 20, 12, 34, 56, 120000), ParseJson(new {
+          date_t_seconds_ms6_relaxed_z = "2345-10-20T12:34:56.12Z",
+      }).date_t_seconds_ms6_relaxed_z);
+      Assert.Equal(CreateDateTime(2345, 10, 20, 12, 34, 56, 123000), ParseJson(new {
+          date_t_seconds_ms6_relaxed_z = "2345-10-20T12:34:56.123Z",
+      }).date_t_seconds_ms6_relaxed_z);
+      Assert.Equal(CreateDateTime(2345, 10, 20, 12, 34, 56, 123400), ParseJson(new {
+          date_t_seconds_ms6_relaxed_z = "2345-10-20T12:34:56.1234Z",
+      }).date_t_seconds_ms6_relaxed_z);
+      Assert.Equal(CreateDateTime(2345, 10, 20, 12, 34, 56, 123450), ParseJson(new {
+          date_t_seconds_ms6_relaxed_z = "2345-10-20T12:34:56.12345Z",
+      }).date_t_seconds_ms6_relaxed_z);
+      Assert.Equal(CreateDateTime(2345, 10, 20, 12, 34, 56, 123456), ParseJson(new {
+          date_t_seconds_ms6_relaxed_z = "2345-10-20T12:34:56.123456Z",
+      }).date_t_seconds_ms6_relaxed_z);
     }
 
     [Fact]
