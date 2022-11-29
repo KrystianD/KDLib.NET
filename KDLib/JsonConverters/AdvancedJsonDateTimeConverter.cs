@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -10,7 +12,7 @@ namespace KDLib.JsonConverters
   public class AdvancedJsonDateTimeConverter : BaseDateTimeConverter
   {
     private readonly Mode _mode;
-    private readonly string _format;
+    private readonly string[] _formats;
 
     [Flags]
     public enum Mode
@@ -44,40 +46,55 @@ namespace KDLib.JsonConverters
 
       _mode = mode;
 
-      string format = "yyyy-MM-dd";
+      var formatParts = new List<string[]> {
+          new[] { "yyyy-MM-dd" },
+      };
 
       if (_mode.HasFlag(Mode.SeparatorT))
-        format += "T";
+        formatParts.Add(new[] { "T" });
       else if (_mode.HasFlag(Mode.SeparatorSpace))
-        format += " ";
+        formatParts.Add(new[] { " " });
 
-      format += "HH:mm";
+      formatParts.Add(new[] { "HH:mm" });
 
       if (_mode.HasFlag(Mode.WithSeconds))
-        format += ":ss";
+        formatParts.Add(new[] { ":ss" });
 
       if (_mode.HasFlag(Mode.WithMilliseconds3))
-        format += ".fff";
+        formatParts.Add(new[] { ".fff" });
       else if (_mode.HasFlag(Mode.WithMilliseconds6))
-        format += ".ffffff";
+        formatParts.Add(new[] { ".ffffff" });
 
       if (_mode.HasFlag(Mode.WithZ))
-        format += "Z";
+        formatParts.Add(new[] { "Z" });
       else if (_mode.HasFlag(Mode.WithOffset))
-        format += "zzz";
+        formatParts.Add(new[] { "zzz" });
 
-      _format = format;
+      _formats = Algorithms.Combinations(formatParts.ToArray()).Select(x => x.JoinString("")).ToArray();
+    }
+
+    private DateTimeOffset ParseInternal(string input)
+    {
+      FormatException lastError = null;
+
+      foreach (var format in _formats) {
+        try {
+          return DateTimeOffset.ParseExact(input, format, CultureInfo.InvariantCulture);
+        }
+        catch (FormatException e) {
+          lastError = e;
+        }
+      }
+
+      if (lastError != null)
+        throw new JsonSerializationException(lastError.Message);
+
+      throw new InvalidOperationException();
     }
 
     protected override DateTime ParseFromString(string input)
     {
-      DateTimeOffset dateOffset;
-      try {
-        dateOffset = DateTimeOffset.ParseExact(input, _format, CultureInfo.InvariantCulture);
-      }
-      catch (FormatException e) {
-        throw new JsonSerializationException(e.Message);
-      }
+      DateTimeOffset dateOffset = ParseInternal(input);
 
       // workaroud: DateTimeOffset.ParseExact parses date without an offset (2345-10-20 12:34) as local dates with UTC variant off by local offset
       var date = _mode.HasFlag(Mode.WithOffset) ? dateOffset.UtcDateTime : dateOffset.DateTime;
