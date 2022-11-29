@@ -10,6 +10,7 @@ namespace KDLib.JsonConverters
   public class AdvancedJsonDateTimeConverter : BaseDateTimeConverter
   {
     private readonly Mode _mode;
+    private readonly string _format;
 
     [Flags]
     public enum Mode
@@ -42,10 +43,7 @@ namespace KDLib.JsonConverters
         throw new Exception("invalid mode");
 
       _mode = mode;
-    }
 
-    protected override DateTime ParseFromString(string input)
-    {
       string format = "yyyy-MM-dd";
 
       if (_mode.HasFlag(Mode.SeparatorT))
@@ -68,9 +66,14 @@ namespace KDLib.JsonConverters
       else if (_mode.HasFlag(Mode.WithOffset))
         format += "zzz";
 
+      _format = format;
+    }
+
+    protected override DateTime ParseFromString(string input)
+    {
       DateTimeOffset dateOffset;
       try {
-        dateOffset = DateTimeOffset.ParseExact(input, format, CultureInfo.InvariantCulture);
+        dateOffset = DateTimeOffset.ParseExact(input, _format, CultureInfo.InvariantCulture);
       }
       catch (FormatException e) {
         throw new JsonSerializationException(e.Message);
