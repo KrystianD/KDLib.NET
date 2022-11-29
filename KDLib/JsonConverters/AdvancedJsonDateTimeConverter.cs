@@ -64,7 +64,7 @@ namespace KDLib.JsonConverters
       if (_mode.HasFlag(Mode.WithMilliseconds3)) {
         // ReSharper disable StringLiteralTypo
         if (_mode.HasFlag(Mode.WithRelaxedFractional))
-          formatParts.Add(new[] { "", ".f", ".ff", ".fff" });
+          formatParts.Add(new[] { ".fff", ".ff", ".f", "" });
         else
           formatParts.Add(new[] { ".fff" });
         // ReSharper enable StringLiteralTypo
@@ -72,7 +72,7 @@ namespace KDLib.JsonConverters
       else if (_mode.HasFlag(Mode.WithMilliseconds6)) {
         // ReSharper disable StringLiteralTypo
         if (_mode.HasFlag(Mode.WithRelaxedFractional))
-          formatParts.Add(new[] { "", ".f", ".ff", ".fff", ".ffff", ".fffff", ".ffffff" });
+          formatParts.Add(new[] { ".ffffff", ".fffff", ".ffff", ".fff", ".ff", ".f", "" });
         else
           formatParts.Add(new[] { ".ffffff" });
         // ReSharper enable StringLiteralTypo
