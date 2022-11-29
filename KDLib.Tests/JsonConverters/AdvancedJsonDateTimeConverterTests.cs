@@ -118,6 +118,9 @@ namespace KDLib.Tests.JsonConverters
     [Fact]
     public void DateTSecondsMillisecondsZRelaxed()
     {
+      Assert.Equal(CreateDateTime(2345, 10, 20, 12, 34, 56, 000000), ParseJson(new {
+          date_t_seconds_ms6_relaxed_z = "2345-10-20T12:34:56Z",
+      }).date_t_seconds_ms6_relaxed_z);
       Assert.Equal(CreateDateTime(2345, 10, 20, 12, 34, 56, 100000), ParseJson(new {
           date_t_seconds_ms6_relaxed_z = "2345-10-20T12:34:56.1Z",
       }).date_t_seconds_ms6_relaxed_z);
