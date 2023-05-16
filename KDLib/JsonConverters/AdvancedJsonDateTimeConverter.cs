@@ -20,8 +20,8 @@ namespace KDLib.JsonConverters
       SeparatorT = 1,
       SeparatorSpace = 2,
       WithSeconds = 4,
-      WithMilliseconds3 = 8,
-      WithMilliseconds6 = 16,
+      WithMilliseconds = 8,
+      WithMicroseconds = 16,
       WithZ = 32,
       WithOffset = 64,
       AsUnspecified = 128,
@@ -34,11 +34,12 @@ namespace KDLib.JsonConverters
 
     public AdvancedJsonDateTimeConverter(Mode mode)
     {
+      if (mode.HasFlag(Mode.WithMicroseconds))
+        mode |= Mode.WithMilliseconds;
+      if (mode.HasFlag(Mode.WithMilliseconds))
+        mode |= Mode.WithSeconds;
+
       if (mode.HasFlag(Mode.SeparatorT) && mode.HasFlag(Mode.SeparatorSpace))
-        throw new Exception("invalid mode");
-      if (mode.HasFlag(Mode.WithMilliseconds3) && mode.HasFlag(Mode.WithMilliseconds6))
-        throw new Exception("invalid mode");
-      if ((mode.HasFlag(Mode.WithMilliseconds3) || mode.HasFlag(Mode.WithMilliseconds6)) && !mode.HasFlag(Mode.WithSeconds))
         throw new Exception("invalid mode");
       if (mode.HasFlag(Mode.WithZ) && mode.HasFlag(Mode.WithOffset))
         throw new Exception("invalid mode");
@@ -61,7 +62,7 @@ namespace KDLib.JsonConverters
       if (_mode.HasFlag(Mode.WithSeconds))
         formatParts.Add(new[] { ":ss" });
 
-      if (_mode.HasFlag(Mode.WithMilliseconds3)) {
+      if (_mode.HasFlag(Mode.WithMilliseconds)) {
         // ReSharper disable StringLiteralTypo
         if (_mode.HasFlag(Mode.WithRelaxedFractional))
           formatParts.Add(new[] { ".fff", ".ff", ".f", "" });
@@ -69,7 +70,7 @@ namespace KDLib.JsonConverters
           formatParts.Add(new[] { ".fff" });
         // ReSharper enable StringLiteralTypo
       }
-      else if (_mode.HasFlag(Mode.WithMilliseconds6)) {
+      else if (_mode.HasFlag(Mode.WithMicroseconds)) {
         // ReSharper disable StringLiteralTypo
         if (_mode.HasFlag(Mode.WithRelaxedFractional))
           formatParts.Add(new[] { ".ffffff", ".fffff", ".ffff", ".fff", ".ff", ".f", "" });

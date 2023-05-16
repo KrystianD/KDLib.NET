@@ -27,19 +27,19 @@ namespace KDLib.Tests.JsonConverters
 
       [JsonConverter(typeof(AdvancedJsonDateTimeConverter), AdvancedJsonDateTimeConverter.Mode.SeparatorT |
                                                             AdvancedJsonDateTimeConverter.Mode.WithSeconds |
-                                                            AdvancedJsonDateTimeConverter.Mode.WithMilliseconds3 |
+                                                            AdvancedJsonDateTimeConverter.Mode.WithMilliseconds |
                                                             AdvancedJsonDateTimeConverter.Mode.WithZ)]
       public DateTime date_t_seconds_ms3_z;
 
       [JsonConverter(typeof(AdvancedJsonDateTimeConverter), AdvancedJsonDateTimeConverter.Mode.SeparatorT |
                                                             AdvancedJsonDateTimeConverter.Mode.WithSeconds |
-                                                            AdvancedJsonDateTimeConverter.Mode.WithMilliseconds6 |
+                                                            AdvancedJsonDateTimeConverter.Mode.WithMicroseconds |
                                                             AdvancedJsonDateTimeConverter.Mode.WithZ)]
       public DateTime date_t_seconds_ms6_z;
 
       [JsonConverter(typeof(AdvancedJsonDateTimeConverter), AdvancedJsonDateTimeConverter.Mode.SeparatorT |
                                                             AdvancedJsonDateTimeConverter.Mode.WithSeconds |
-                                                            AdvancedJsonDateTimeConverter.Mode.WithMilliseconds6 |
+                                                            AdvancedJsonDateTimeConverter.Mode.WithMicroseconds |
                                                             AdvancedJsonDateTimeConverter.Mode.WithRelaxedFractional |
                                                             AdvancedJsonDateTimeConverter.Mode.WithZ)]
       public DateTime date_t_seconds_ms6_relaxed_z;
@@ -51,7 +51,7 @@ namespace KDLib.Tests.JsonConverters
 
       [JsonConverter(typeof(AdvancedJsonDateTimeConverter), AdvancedJsonDateTimeConverter.Mode.SeparatorT |
                                                             AdvancedJsonDateTimeConverter.Mode.WithSeconds |
-                                                            AdvancedJsonDateTimeConverter.Mode.WithMilliseconds3 |
+                                                            AdvancedJsonDateTimeConverter.Mode.WithMilliseconds |
                                                             AdvancedJsonDateTimeConverter.Mode.WithOffset)]
       public DateTime date_t_seconds_ms3_tz1;
 
