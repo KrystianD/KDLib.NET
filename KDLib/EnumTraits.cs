@@ -44,11 +44,6 @@ namespace KDLib
 
     public static bool IsValid(TEnum value) => _valuesSet.Contains(value);
 
-    public static TEnum? FindByMemberValue(string value)
-    {
-      if (_memberValueToEnum.TryGetValue(value, out var val))
-        return val;
-      return null;
-    }
+    public static TEnum? FindByMemberValue(string value) => _memberValueToEnum.TryGetValue(value, out var val) ? (TEnum?)val : null;
   }
 }
