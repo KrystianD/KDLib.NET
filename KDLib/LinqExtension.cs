@@ -87,5 +87,9 @@ namespace KDLib
         yield return item;
       }
     }
+
+
+    public static T Random<T>(this IReadOnlyList<T> list, Random random) => list[random.Next(list.Count)];
+    public static T Random<T>(this IReadOnlyList<T> list) => list[ThreadSafeSharedRandom.RandInt(list.Count)];
   }
 }
