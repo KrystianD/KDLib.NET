@@ -41,10 +41,12 @@ namespace KDLib
       }
     }
 
+    // ReSharper disable StaticMemberInGenericType
     public static bool IsEmpty { get; }
     public static long MinValue { get; }
     public static long MaxValue { get; }
     public static TEnum[] EnumValues { get; }
+    // ReSharper restore StaticMemberInGenericType
 
     public static bool IsValid(TEnum value) => _valuesSet.Contains(value);
 
