@@ -10,6 +10,7 @@ namespace KDLib
   {
     private static HashSet<TEnum> _valuesSet;
     private static Dictionary<string, TEnum> _memberValueToEnum;
+    private static Dictionary<TEnum, string> _enumToMemberValue;
 
     static EnumTraits()
     {
@@ -22,6 +23,9 @@ namespace KDLib
                            .Select(x => (x.GetMemberValue(), x))
                            .Distinct(x => x.Item1)
                            .ToDictionary(x => x.Item1, x => x.Item2);
+      _enumToMemberValue = EnumValues
+                           .Select(x => (x.GetMemberValue(), x))
+                           .ToDictionary(x => x.Item2, x => x.Item1);
 
       var longValues =
           EnumValues
@@ -45,5 +49,6 @@ namespace KDLib
     public static bool IsValid(TEnum value) => _valuesSet.Contains(value);
 
     public static TEnum? FindByMemberValue(string value) => _memberValueToEnum.TryGetValue(value, out var val) ? (TEnum?)val : null;
+    public static string GetMemberValue(TEnum @enum) => _enumToMemberValue[@enum];
   }
 }

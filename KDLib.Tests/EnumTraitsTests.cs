@@ -43,5 +43,14 @@ namespace KDLib.Tests
       Assert.Equal(TestEnum.Value3, EnumTraits<TestEnum>.FindByMemberValue("Value 3"));
       Assert.Null(EnumTraits<TestEnum>.FindByMemberValue("other"));
     }
+
+    [Fact]
+    public void TestGetMemberValue()
+    {
+      Assert.Equal("Value 1", EnumTraits<TestEnum>.GetMemberValue(TestEnum.Value1));
+      Assert.Equal("Value 2", EnumTraits<TestEnum>.GetMemberValue(TestEnum.Value2));
+      Assert.Equal("Value 3", EnumTraits<TestEnum>.GetMemberValue(TestEnum.Value3));
+      Assert.Equal("Value 3", EnumTraits<TestEnum>.GetMemberValue(TestEnum.Value3Duplicated));
+    }
   }
 }
