@@ -16,6 +16,9 @@ namespace KDLib.Tests
 
       [EnumMember(Value = "Value 3")]
       Value3,
+
+      [EnumMember(Value = "Value 3")]
+      Value3Duplicated,
     }
 
     [Fact]
@@ -24,11 +27,12 @@ namespace KDLib.Tests
       Assert.Collection(EnumTraits<TestEnum>.EnumValues.OrderBy(x => (long)x),
                         x => Assert.Equal(TestEnum.Value1, x),
                         x => Assert.Equal(TestEnum.Value2, x),
-                        x => Assert.Equal(TestEnum.Value3, x));
+                        x => Assert.Equal(TestEnum.Value3, x),
+                        x => Assert.Equal(TestEnum.Value3Duplicated, x));
 
       Assert.False(EnumTraits<TestEnum>.IsEmpty);
       Assert.Equal(-1, EnumTraits<TestEnum>.MinValue);
-      Assert.Equal(3, EnumTraits<TestEnum>.MaxValue);
+      Assert.Equal(4, EnumTraits<TestEnum>.MaxValue);
     }
 
     [Fact]
@@ -36,6 +40,7 @@ namespace KDLib.Tests
     {
       Assert.Equal(TestEnum.Value1, EnumTraits<TestEnum>.FindByMemberValue("Value 1"));
       Assert.Equal(TestEnum.Value2, EnumTraits<TestEnum>.FindByMemberValue("Value 2"));
+      Assert.Equal(TestEnum.Value3, EnumTraits<TestEnum>.FindByMemberValue("Value 3"));
       Assert.Null(EnumTraits<TestEnum>.FindByMemberValue("other"));
     }
   }
