@@ -62,20 +62,20 @@ namespace KDLib.JsonConverters
       if (_mode.HasFlag(Mode.WithSeconds))
         formatParts.Add(new[] { ":ss" });
 
-      if (_mode.HasFlag(Mode.WithMilliseconds)) {
-        // ReSharper disable StringLiteralTypo
-        if (_mode.HasFlag(Mode.WithRelaxedFractional))
-          formatParts.Add(new[] { ".fff", ".ff", ".f", "" });
-        else
-          formatParts.Add(new[] { ".fff" });
-        // ReSharper enable StringLiteralTypo
-      }
-      else if (_mode.HasFlag(Mode.WithMicroseconds)) {
+      if (_mode.HasFlag(Mode.WithMicroseconds)) {
         // ReSharper disable StringLiteralTypo
         if (_mode.HasFlag(Mode.WithRelaxedFractional))
           formatParts.Add(new[] { ".ffffff", ".fffff", ".ffff", ".fff", ".ff", ".f", "" });
         else
           formatParts.Add(new[] { ".ffffff" });
+        // ReSharper enable StringLiteralTypo
+      }
+      else if (_mode.HasFlag(Mode.WithMilliseconds)) {
+        // ReSharper disable StringLiteralTypo
+        if (_mode.HasFlag(Mode.WithRelaxedFractional))
+          formatParts.Add(new[] { ".fff", ".ff", ".f", "" });
+        else
+          formatParts.Add(new[] { ".fff" });
         // ReSharper enable StringLiteralTypo
       }
 
