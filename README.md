@@ -31,6 +31,8 @@ Supports net6.0, net5.0, netstandard2.1 and netstandard2.0
   * `DecimalJsonConverter`
   * `AdvancedJsonDateTimeConverter` - easily customizable date parser,
   * `Iso8601UTCJsonDateTimeConverter` - ISO 8601 compliant date converter,
+  * `JsonIntegerUtcEpochDateTimeConverter` - integer unix epoch parser,
+  * `JsonDoubleUtcEpochDateTimeConverter` - float unix epoch parser,
 
 
 * JSON utilities - sorting keys, sanitizing objects, cleaning empty objects,
