@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using JetBrains.Annotations;
+using KDLib.JsonConverters.DateTime.BaseConverters;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
-namespace KDLib.JsonConverters
+namespace KDLib.JsonConverters.DateTime
 {
   [PublicAPI]
   public class AdvancedJsonDateTimeConverter : BaseStringDateTimeConverter
@@ -106,7 +106,7 @@ namespace KDLib.JsonConverters
       throw new InvalidOperationException();
     }
 
-    protected override DateTime ParseFromString(string input)
+    protected override System.DateTime ParseFromString(string input)
     {
       DateTimeOffset dateOffset = ParseInternal(input);
 
@@ -115,10 +115,10 @@ namespace KDLib.JsonConverters
 
       var targetKind = _mode.HasFlag(Mode.AsUTC) ? DateTimeKind.Utc : DateTimeKind.Unspecified;
 
-      return DateTime.SpecifyKind(date, targetKind);
+      return System.DateTime.SpecifyKind(date, targetKind);
     }
 
-    protected override string FormatToString(DateTime datetime)
+    protected override string FormatToString(System.DateTime datetime)
     {
       throw new NotSupportedException();
     }

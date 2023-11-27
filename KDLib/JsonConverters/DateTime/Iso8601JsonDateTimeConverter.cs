@@ -1,8 +1,9 @@
 using System;
 using System.Globalization;
 using JetBrains.Annotations;
+using KDLib.JsonConverters.DateTime.BaseConverters;
 
-namespace KDLib.JsonConverters
+namespace KDLib.JsonConverters.DateTime
 {
   [PublicAPI]
   public class Iso8601UTCJsonDateTimeConverter : BaseStringDateTimeConverter
@@ -12,12 +13,12 @@ namespace KDLib.JsonConverters
     public override bool CanRead => true;
     public override bool CanWrite => true;
 
-    protected override DateTime ParseFromString(string input)
+    protected override System.DateTime ParseFromString(string input)
     {
-      return DateTime.ParseExact(input, Format, CultureInfo.CurrentCulture);
+      return System.DateTime.ParseExact(input, Format, CultureInfo.CurrentCulture);
     }
 
-    protected override string FormatToString(DateTime datetime)
+    protected override string FormatToString(System.DateTime datetime)
     {
       if (datetime.Kind != DateTimeKind.Utc)
         throw new ArgumentException("Datetime objects must use Kind=UTC");

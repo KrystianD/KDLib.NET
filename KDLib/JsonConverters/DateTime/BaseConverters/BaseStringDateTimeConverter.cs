@@ -1,19 +1,18 @@
 using System;
-using JetBrains.Annotations;
 using Newtonsoft.Json;
 
-namespace KDLib.JsonConverters
+namespace KDLib.JsonConverters.DateTime.BaseConverters
 {
   public abstract class BaseStringDateTimeConverter : JsonConverter
   {
     public override bool CanConvert(Type objectType)
     {
-      return objectType == typeof(DateTime) || objectType == typeof(DateTime?);
+      return objectType == typeof(System.DateTime) || objectType == typeof(System.DateTime?);
     }
 
     public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
     {
-      writer.WriteValue(FormatToString((DateTime)value));
+      writer.WriteValue(FormatToString((System.DateTime)value));
     }
 
     public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
@@ -38,8 +37,8 @@ namespace KDLib.JsonConverters
       return ParseFromString(str);
     }
 
-    protected abstract DateTime ParseFromString(string input);
-    protected abstract string FormatToString(DateTime datetime);
+    protected abstract System.DateTime ParseFromString(string input);
+    protected abstract string FormatToString(System.DateTime datetime);
 
     private static bool IsGenericType(Type type) => type.IsGenericType;
     private static bool IsNullableType(Type t) => IsGenericType(t) && t.GetGenericTypeDefinition() == typeof(Nullable<>);

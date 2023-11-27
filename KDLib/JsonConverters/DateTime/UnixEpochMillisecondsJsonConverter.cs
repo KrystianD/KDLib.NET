@@ -3,7 +3,7 @@ using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace KDLib.JsonConverters
+namespace KDLib.JsonConverters.DateTime
 {
   [PublicAPI]
   public class UnixEpochMillisecondsJsonConverter : DateTimeConverterBase
@@ -38,7 +38,7 @@ namespace KDLib.JsonConverters
       if (reader.TokenType == JsonToken.Date) {
         if (type == typeof(DateTimeOffset)) {
           if (!(reader.Value is DateTimeOffset))
-            return new DateTimeOffset((DateTime)reader.Value);
+            return new DateTimeOffset((System.DateTime)reader.Value);
           return reader.Value;
         }
 

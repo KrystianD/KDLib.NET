@@ -2,7 +2,7 @@ using System.Globalization;
 using JetBrains.Annotations;
 using Newtonsoft.Json.Converters;
 
-namespace KDLib.JsonConverters
+namespace KDLib.JsonConverters.DateTime
 {
   [PublicAPI]
   public class DateFormatJsonConverter : IsoDateTimeConverter
