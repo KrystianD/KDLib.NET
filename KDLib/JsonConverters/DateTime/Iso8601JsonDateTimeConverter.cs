@@ -21,7 +21,7 @@ namespace KDLib.JsonConverters.DateTime
     protected override string FormatToString(System.DateTime datetime)
     {
       if (datetime.Kind != DateTimeKind.Utc)
-        throw new ArgumentException("Datetime objects must use Kind=UTC");
+        throw new ArgumentException("DateTime objects must use Kind=UTC");
 
       return datetime.ToString(Format, CultureInfo.CurrentCulture);
     }
