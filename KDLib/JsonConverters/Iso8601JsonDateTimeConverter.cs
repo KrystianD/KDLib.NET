@@ -5,7 +5,7 @@ using JetBrains.Annotations;
 namespace KDLib.JsonConverters
 {
   [PublicAPI]
-  public class Iso8601UTCJsonDateTimeConverter : BaseDateTimeConverter
+  public class Iso8601UTCJsonDateTimeConverter : BaseStringDateTimeConverter
   {
     private const string Format = "yyyy-MM-dd'T'HH:mm:ss'Z'";
 

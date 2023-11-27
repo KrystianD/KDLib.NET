@@ -9,7 +9,7 @@ using Newtonsoft.Json.Converters;
 namespace KDLib.JsonConverters
 {
   [PublicAPI]
-  public class AdvancedJsonDateTimeConverter : BaseDateTimeConverter
+  public class AdvancedJsonDateTimeConverter : BaseStringDateTimeConverter
   {
     private readonly Mode _mode;
     private readonly string[] _formats;

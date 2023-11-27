@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace KDLib.JsonConverters
 {
-  public abstract class BaseDateTimeConverter : JsonConverter
+  public abstract class BaseStringDateTimeConverter : JsonConverter
   {
     public override bool CanConvert(Type objectType)
     {
