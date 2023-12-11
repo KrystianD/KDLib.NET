@@ -55,6 +55,11 @@ namespace KDLib
       return seq.GroupBy(key).ToDictionary(x => x.Key, x => x.Select(item).ToList());
     }
 
+    public static Dictionary<TKey, int> GroupByToCount<TValue, TKey>(this IEnumerable<TValue> seq, Func<TValue, TKey> key)
+    {
+      return seq.GroupBy(key).ToDictionary(x => x.Key, x => x.Count());
+    }
+
     public static IEnumerable<T> Distinct<T, TKey>(this IEnumerable<T> list, Func<T, TKey> lookup)
     {
       return list.Distinct(new StructEqualityComparer<T, TKey>(lookup));
