@@ -34,16 +34,18 @@ namespace KDLib.JsonConverters.DateTime
 
     public AdvancedJsonDateTimeConverter(Mode mode)
     {
+      bool HasMoreThanOneFlag(params Mode[] flags) => flags.Count(x => mode.HasFlag(x)) > 1;
+
       if (mode.HasFlag(Mode.WithMicroseconds))
         mode |= Mode.WithMilliseconds;
       if (mode.HasFlag(Mode.WithMilliseconds))
         mode |= Mode.WithSeconds;
 
-      if (mode.HasFlag(Mode.SeparatorT) && mode.HasFlag(Mode.SeparatorSpace))
+      if (HasMoreThanOneFlag(Mode.SeparatorT, Mode.SeparatorSpace))
         throw new Exception("invalid mode");
-      if (mode.HasFlag(Mode.WithZ) && mode.HasFlag(Mode.WithOffset))
+      if (HasMoreThanOneFlag(Mode.WithZ, Mode.WithOffset))
         throw new Exception("invalid mode");
-      if (mode.HasFlag(Mode.AsUnspecified) && mode.HasFlag(Mode.AsUTC))
+      if (HasMoreThanOneFlag(Mode.AsUnspecified, Mode.AsUTC))
         throw new Exception("invalid mode");
 
       _mode = mode;
