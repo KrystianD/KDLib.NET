@@ -24,6 +24,7 @@ namespace KDLib.JsonConverters.DateTime
       WithMicroseconds = 16,
       WithZ = 32,
       WithOffset = 64,
+      WithZOrOffset = 1024,
       AsUnspecified = 128,
       AsUTC = 256,
       WithRelaxedFractional = 512,
@@ -85,6 +86,8 @@ namespace KDLib.JsonConverters.DateTime
         formatParts.Add(new[] { "Z" });
       else if (_mode.HasFlag(Mode.WithOffset))
         formatParts.Add(new[] { "zzz" });
+      else if (_mode.HasFlag(Mode.WithZOrOffset))
+        formatParts.Add(new[] { "Z", "zzz" });
 
       _formats = Algorithms.Combinations(formatParts.ToArray()).Select(x => x.JoinString("")).ToArray();
     }
@@ -113,7 +116,7 @@ namespace KDLib.JsonConverters.DateTime
       DateTimeOffset dateOffset = ParseInternal(input);
 
       // workaroud: DateTimeOffset.ParseExact parses date without an offset (2345-10-20 12:34) as local dates with UTC variant off by local offset
-      var date = _mode.HasFlag(Mode.WithOffset) ? dateOffset.UtcDateTime : dateOffset.DateTime;
+      var date = (_mode.HasFlag(Mode.WithOffset) || _mode.HasFlag(Mode.WithZOrOffset)) ? dateOffset.UtcDateTime : dateOffset.DateTime;
 
       var targetKind = _mode.HasFlag(Mode.AsUTC) ? DateTimeKind.Utc : DateTimeKind.Unspecified;
 

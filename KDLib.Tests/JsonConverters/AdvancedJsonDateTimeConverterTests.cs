@@ -64,6 +64,11 @@ namespace KDLib.Tests.JsonConverters
                                                             AdvancedJsonDateTimeConverter.Mode.WithZ |
                                                             AdvancedJsonDateTimeConverter.Mode.AsUTC)]
       public DateTime date_t_utc_z;
+
+      [JsonConverter(typeof(AdvancedJsonDateTimeConverter), AdvancedJsonDateTimeConverter.Mode.SeparatorT |
+                                                            AdvancedJsonDateTimeConverter.Mode.WithZOrOffset |
+                                                            AdvancedJsonDateTimeConverter.Mode.AsUTC)]
+      public DateTime date_t_z_offset;
     }
 
     private static Model ParseJson(object data) =>
@@ -176,6 +181,22 @@ namespace KDLib.Tests.JsonConverters
       Assert.Throws<JsonSerializationException>(() => ParseJson(new {
           date_t_utc = "2345-10-20 12:34", // invalid format
       }).date_t_utc);
+    }
+
+    [Fact]
+    public void DateVariousTimezones()
+    {
+      Assert.Equal(CreateDateTime(2345, 10, 20, 12, 34, 00, 0), ParseJson(new {
+          date_t_z_offset = "2345-10-20T12:34Z",
+      }).date_t_z_offset);
+
+      Assert.Equal(CreateDateTime(2345, 10, 20, 12, 34, 00, 0), ParseJson(new {
+          date_t_z_offset = "2345-10-20T12:34+00:00",
+      }).date_t_z_offset);
+
+      Assert.Equal(CreateDateTime(2345, 10, 20, 12 + 2, 34, 00, 0), ParseJson(new {
+              date_t_z_offset = "2345-10-20T12:34-02:00",
+      }).date_t_z_offset);
     }
   }
 }
