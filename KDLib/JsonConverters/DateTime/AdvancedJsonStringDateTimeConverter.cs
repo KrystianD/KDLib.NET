@@ -78,21 +78,12 @@ namespace KDLib.JsonConverters.DateTime
 
     private DateTimeOffset ParseInternal(string input)
     {
-      FormatException lastError = null;
-
-      foreach (var format in _formats) {
-        try {
-          return DateTimeOffset.ParseExact(input, format, CultureInfo.InvariantCulture);
-        }
-        catch (FormatException e) {
-          lastError = e;
-        }
+      try {
+        return DateTimeOffset.ParseExact(input, _formats, CultureInfo.InvariantCulture, DateTimeStyles.None);
       }
-
-      if (lastError != null)
-        throw new JsonSerializationException(lastError.Message);
-
-      throw new InvalidOperationException();
+      catch (FormatException e) {
+        throw new JsonSerializationException(e.Message);
+      }
     }
 
     protected override System.DateTime ParseFromString(string input)
