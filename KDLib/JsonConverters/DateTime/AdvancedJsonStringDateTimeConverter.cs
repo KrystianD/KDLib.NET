@@ -20,14 +20,12 @@ namespace KDLib.JsonConverters.DateTime
       SeparatorT = 1,
       SeparatorSpace = 2,
       WithSeconds = 4,
-      WithMilliseconds = 8,
-      WithMicroseconds = 16,
+      WithFractional = 4,
       WithZ = 32,
       WithOffset = 64,
       WithZOrOffset = 1024,
       AsUnspecified = 128,
       AsUTC = 256,
-      WithRelaxedFractional = 512,
     }
 
     public override bool CanRead => true;
@@ -37,9 +35,7 @@ namespace KDLib.JsonConverters.DateTime
     {
       bool HasMoreThanOneFlag(params Mode[] flags) => flags.Count(x => mode.HasFlag(x)) > 1;
 
-      if (mode.HasFlag(Mode.WithMicroseconds))
-        mode |= Mode.WithMilliseconds;
-      if (mode.HasFlag(Mode.WithMilliseconds))
+      if (mode.HasFlag(Mode.WithFractional))
         mode |= Mode.WithSeconds;
 
       if (HasMoreThanOneFlag(Mode.SeparatorT, Mode.SeparatorSpace))
@@ -65,21 +61,9 @@ namespace KDLib.JsonConverters.DateTime
       if (_mode.HasFlag(Mode.WithSeconds))
         formatParts.Add(new[] { ":ss" });
 
-      if (_mode.HasFlag(Mode.WithMicroseconds)) {
+      if (_mode.HasFlag(Mode.WithFractional)) {
         // ReSharper disable StringLiteralTypo
-        if (_mode.HasFlag(Mode.WithRelaxedFractional))
-          formatParts.Add(new[] { ".ffffff", ".fffff", ".ffff", ".fff", ".ff", ".f", "" });
-        else
-          formatParts.Add(new[] { ".ffffff" });
-        // ReSharper enable StringLiteralTypo
-      }
-      else if (_mode.HasFlag(Mode.WithMilliseconds)) {
-        // ReSharper disable StringLiteralTypo
-        if (_mode.HasFlag(Mode.WithRelaxedFractional))
-          formatParts.Add(new[] { ".fff", ".ff", ".f", "" });
-        else
-          formatParts.Add(new[] { ".fff" });
-        // ReSharper enable StringLiteralTypo
+        formatParts.Add(new[] { ".FFFFFFF" });
       }
 
       if (_mode.HasFlag(Mode.WithZ))

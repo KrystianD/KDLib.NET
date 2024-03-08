@@ -28,22 +28,22 @@ namespace KDLib.Tests.JsonConverters
 
       [JsonConverter(typeof(AdvancedJsonDateTimeConverter), AdvancedJsonDateTimeConverter.Mode.SeparatorT |
                                                             AdvancedJsonDateTimeConverter.Mode.WithSeconds |
-                                                            AdvancedJsonDateTimeConverter.Mode.WithMilliseconds |
+                                                            AdvancedJsonDateTimeConverter.Mode.WithFractional |
                                                             AdvancedJsonDateTimeConverter.Mode.WithZ)]
       public DateTime date_t_seconds_ms3_z;
 
       [JsonConverter(typeof(AdvancedJsonDateTimeConverter), AdvancedJsonDateTimeConverter.Mode.SeparatorT |
                                                             AdvancedJsonDateTimeConverter.Mode.WithSeconds |
-                                                            AdvancedJsonDateTimeConverter.Mode.WithMicroseconds |
+                                                            AdvancedJsonDateTimeConverter.Mode.WithFractional |
                                                             AdvancedJsonDateTimeConverter.Mode.WithZ)]
       public DateTime date_t_seconds_ms6_z;
 
       [JsonConverter(typeof(AdvancedJsonDateTimeConverter), AdvancedJsonDateTimeConverter.Mode.SeparatorT |
                                                             AdvancedJsonDateTimeConverter.Mode.WithSeconds |
-                                                            AdvancedJsonDateTimeConverter.Mode.WithMicroseconds |
-                                                            AdvancedJsonDateTimeConverter.Mode.WithRelaxedFractional |
+                                                            AdvancedJsonDateTimeConverter.Mode.WithFractional |
                                                             AdvancedJsonDateTimeConverter.Mode.WithZ)]
-      public DateTime date_t_seconds_ms6_relaxed_z;
+      public DateTime date_t_seconds_ms7_z;
+
 
       [JsonConverter(typeof(AdvancedJsonDateTimeConverter), AdvancedJsonDateTimeConverter.Mode.SeparatorT |
                                                             AdvancedJsonDateTimeConverter.Mode.WithSeconds |
@@ -52,7 +52,7 @@ namespace KDLib.Tests.JsonConverters
 
       [JsonConverter(typeof(AdvancedJsonDateTimeConverter), AdvancedJsonDateTimeConverter.Mode.SeparatorT |
                                                             AdvancedJsonDateTimeConverter.Mode.WithSeconds |
-                                                            AdvancedJsonDateTimeConverter.Mode.WithMilliseconds |
+                                                            AdvancedJsonDateTimeConverter.Mode.WithFractional |
                                                             AdvancedJsonDateTimeConverter.Mode.WithOffset)]
       public DateTime date_t_seconds_ms3_tz1;
 
@@ -74,8 +74,8 @@ namespace KDLib.Tests.JsonConverters
     private static Model ParseJson(object data) =>
         JsonConvert.DeserializeObject<Model>(JToken.FromObject(data).ToString(), new JsonSerializerSettings { DateParseHandling = DateParseHandling.None });
 
-    private static DateTime CreateDateTime(int year, int month, int days, int hours, int minutes, int seconds, int microseconds) =>
-        DateTime.SpecifyKind(new DateTime(year, month, days, hours, minutes, seconds).AddTicks(microseconds * 10), DateTimeKind.Unspecified);
+    private static DateTime CreateDateTime(int year, int month, int days, int hours, int minutes, int seconds, double microseconds) =>
+        DateTime.SpecifyKind(new DateTime(year, month, days, hours, minutes, seconds).AddTicks((int)(microseconds * 10)), DateTimeKind.Unspecified);
 
     [Fact]
     public void DateSpace()
@@ -110,7 +110,7 @@ namespace KDLib.Tests.JsonConverters
     }
 
     [Fact]
-    public void DateTSecondsMillisecondsZ()
+    public void DateTSecondsFractionalZ()
     {
       Assert.Equal(CreateDateTime(2345, 10, 20, 12, 34, 56, 123000), ParseJson(new {
           date_t_seconds_ms3_z = "2345-10-20T12:34:56.123Z",
@@ -119,32 +119,10 @@ namespace KDLib.Tests.JsonConverters
       Assert.Equal(CreateDateTime(2345, 10, 20, 12, 34, 56, 123456), ParseJson(new {
           date_t_seconds_ms6_z = "2345-10-20T12:34:56.123456Z",
       }).date_t_seconds_ms6_z);
-    }
 
-    [Fact]
-    public void DateTSecondsMillisecondsZRelaxed()
-    {
-      Assert.Equal(CreateDateTime(2345, 10, 20, 12, 34, 56, 000000), ParseJson(new {
-          date_t_seconds_ms6_relaxed_z = "2345-10-20T12:34:56Z",
-      }).date_t_seconds_ms6_relaxed_z);
-      Assert.Equal(CreateDateTime(2345, 10, 20, 12, 34, 56, 100000), ParseJson(new {
-          date_t_seconds_ms6_relaxed_z = "2345-10-20T12:34:56.1Z",
-      }).date_t_seconds_ms6_relaxed_z);
-      Assert.Equal(CreateDateTime(2345, 10, 20, 12, 34, 56, 120000), ParseJson(new {
-          date_t_seconds_ms6_relaxed_z = "2345-10-20T12:34:56.12Z",
-      }).date_t_seconds_ms6_relaxed_z);
-      Assert.Equal(CreateDateTime(2345, 10, 20, 12, 34, 56, 123000), ParseJson(new {
-          date_t_seconds_ms6_relaxed_z = "2345-10-20T12:34:56.123Z",
-      }).date_t_seconds_ms6_relaxed_z);
-      Assert.Equal(CreateDateTime(2345, 10, 20, 12, 34, 56, 123400), ParseJson(new {
-          date_t_seconds_ms6_relaxed_z = "2345-10-20T12:34:56.1234Z",
-      }).date_t_seconds_ms6_relaxed_z);
-      Assert.Equal(CreateDateTime(2345, 10, 20, 12, 34, 56, 123450), ParseJson(new {
-          date_t_seconds_ms6_relaxed_z = "2345-10-20T12:34:56.12345Z",
-      }).date_t_seconds_ms6_relaxed_z);
-      Assert.Equal(CreateDateTime(2345, 10, 20, 12, 34, 56, 123456), ParseJson(new {
-          date_t_seconds_ms6_relaxed_z = "2345-10-20T12:34:56.123456Z",
-      }).date_t_seconds_ms6_relaxed_z);
+      Assert.Equal(CreateDateTime(2345, 10, 20, 12, 34, 56, 123456.7), ParseJson(new {
+          date_t_seconds_ms7_z = "2345-10-20T12:34:56.1234567Z",
+      }).date_t_seconds_ms7_z);
     }
 
     [Fact]
@@ -195,7 +173,7 @@ namespace KDLib.Tests.JsonConverters
       }).date_t_z_offset);
 
       Assert.Equal(CreateDateTime(2345, 10, 20, 12 + 2, 34, 00, 0), ParseJson(new {
-              date_t_z_offset = "2345-10-20T12:34-02:00",
+          date_t_z_offset = "2345-10-20T12:34-02:00",
       }).date_t_z_offset);
     }
   }
