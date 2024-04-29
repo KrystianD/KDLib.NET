@@ -3,7 +3,7 @@
     <TargetFrameworks>net5.0;net6.0</TargetFrameworks>
     <LangVersion>8</LangVersion>
     <RootNamespace>KDLib</RootNamespace>
-    <Version>0.5.3</Version>
+    <Version>0.5.4</Version>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="2020.3.0" />
