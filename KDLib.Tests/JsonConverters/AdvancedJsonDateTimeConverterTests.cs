@@ -69,6 +69,10 @@ namespace KDLib.Tests.JsonConverters
                                                             AdvancedJsonDateTimeConverter.Mode.WithZOrOffset |
                                                             AdvancedJsonDateTimeConverter.Mode.AsUTC)]
       public DateTime date_t_z_offset;
+
+      [JsonConverter(typeof(AdvancedJsonDateTimeConverter), AdvancedJsonDateTimeConverter.Mode.SeparatorT |
+                                                            AdvancedJsonDateTimeConverter.Mode.AllZerosAsNull)]
+      public DateTime? date_as_zero;
     }
 
     private static Model ParseJson(object data) =>
@@ -175,6 +179,14 @@ namespace KDLib.Tests.JsonConverters
       Assert.Equal(CreateDateTime(2345, 10, 20, 12 + 2, 34, 00, 0), ParseJson(new {
           date_t_z_offset = "2345-10-20T12:34-02:00",
       }).date_t_z_offset);
+    }
+
+    [Fact]
+    public void DateAsZero()
+    {
+      Assert.Null(ParseJson(new {
+          date_as_zero = "0000-00-00T00:00Z",
+      }).date_as_zero);
     }
   }
 }

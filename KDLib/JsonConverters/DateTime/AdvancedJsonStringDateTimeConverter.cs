@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
 using JetBrains.Annotations;
 using KDLib.JsonConverters.DateTime.BaseConverters;
 using Newtonsoft.Json;
@@ -13,6 +14,8 @@ namespace KDLib.JsonConverters.DateTime
   {
     private readonly Mode _mode;
     private readonly string[] _formats;
+
+    private readonly Regex _digitRegex = new Regex("[0-9]");
 
     [Flags]
     public enum Mode
@@ -26,6 +29,7 @@ namespace KDLib.JsonConverters.DateTime
       WithZOrOffset = 1024,
       AsUnspecified = 128,
       AsUTC = 256,
+      AllZerosAsNull = 512,
     }
 
     public override bool CanRead => true;
@@ -86,8 +90,14 @@ namespace KDLib.JsonConverters.DateTime
       }
     }
 
-    protected override System.DateTime ParseFromString(string input)
+    protected override System.DateTime? ParseFromString(string input)
     {
+      if (_mode.HasFlag(Mode.AllZerosAsNull)) {
+        if (_digitRegex.Matches(input).All(x => x.Value == "0")) {
+          return null;
+        }
+      }
+      
       DateTimeOffset dateOffset = ParseInternal(input);
 
       // workaroud: DateTimeOffset.ParseExact parses date without an offset (2345-10-20 12:34) as local dates with UTC variant off by local offset
