@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net5.0;net6.0</TargetFrameworks>
-    <LangVersion>8</LangVersion>
+    <LangVersion>default</LangVersion>
     <RootNamespace>KDLib</RootNamespace>
     <Version>0.5.4</Version>
   </PropertyGroup>
