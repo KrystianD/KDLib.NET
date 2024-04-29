@@ -3,7 +3,7 @@ KDLib.NET
 
 Collection of various utilities I use in my projects.
 
-Supports net6.0, net5.0, netstandard2.1 and netstandard2.0
+Supports net6.0, net5.0
 
 ### Includes
 
