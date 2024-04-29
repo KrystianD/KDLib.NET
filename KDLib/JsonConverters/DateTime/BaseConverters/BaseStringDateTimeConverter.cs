@@ -14,13 +14,17 @@ namespace KDLib.JsonConverters.DateTime.BaseConverters
         return null;
       }
 
-      return ParseFromString(str);
+      var result = ParseFromString(str);
+      if (result is null && !isNullableType)
+        throw new JsonSerializationException($"Cannot convert null value to {objectType}.");
+
+      return result;
     }
 
     protected override object FormatToValue(System.DateTime datetime) => FormatToString(datetime);
     protected override JsonToken[] AllowedTokenTypes { get; } = { JsonToken.String };
 
-    protected abstract System.DateTime ParseFromString(string input);
+    protected abstract System.DateTime? ParseFromString(string input);
     protected abstract string FormatToString(System.DateTime datetime);
   }
 }

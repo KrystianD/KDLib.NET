@@ -13,7 +13,7 @@ namespace KDLib.JsonConverters.DateTime
     public override bool CanRead => true;
     public override bool CanWrite => true;
 
-    protected override System.DateTime ParseFromString(string input)
+    protected override System.DateTime? ParseFromString(string input)
     {
       return System.DateTime.ParseExact(input, Format, CultureInfo.CurrentCulture);
     }
