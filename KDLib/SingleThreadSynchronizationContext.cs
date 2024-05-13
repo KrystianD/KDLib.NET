@@ -34,6 +34,8 @@ namespace KDLib
       return _queue.IsCompleted;
     }
 
+    public int Length => _queue.Count;
+
     public static void Run(Func<Task> func)
     {
       var prevCtx = Current;
