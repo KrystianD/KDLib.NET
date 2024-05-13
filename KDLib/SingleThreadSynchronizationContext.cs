@@ -10,38 +10,36 @@ namespace KDLib
   [PublicAPI]
   public class SingleThreadSynchronizationContext : SynchronizationContext
   {
-    private readonly
-        BlockingCollection<KeyValuePair<SendOrPostCallback, object>>
-        _mQueue = new BlockingCollection<KeyValuePair<SendOrPostCallback, object>>();
+    private readonly BlockingCollection<KeyValuePair<SendOrPostCallback, object>> _queue = new();
 
     public override void Post(SendOrPostCallback d, object state)
     {
-      _mQueue.Add(new KeyValuePair<SendOrPostCallback, object>(d, state));
+      _queue.Add(new KeyValuePair<SendOrPostCallback, object>(d, state));
     }
 
     public void RunOnCurrentThread()
     {
       KeyValuePair<SendOrPostCallback, object> workItem;
-      while (_mQueue.TryTake(out workItem, Timeout.Infinite))
+      while (_queue.TryTake(out workItem, Timeout.Infinite))
         workItem.Key(workItem.Value);
     }
 
     public void Complete()
     {
-      _mQueue.CompleteAdding();
+      _queue.CompleteAdding();
     }
 
     public bool IsStopped()
     {
-      return _mQueue.IsCompleted;
+      return _queue.IsCompleted;
     }
 
     public static void Run(Func<Task> func)
     {
-      var prevCtx = SynchronizationContext.Current;
+      var prevCtx = Current;
       try {
         var syncCtx = new SingleThreadSynchronizationContext();
-        SynchronizationContext.SetSynchronizationContext(syncCtx);
+        SetSynchronizationContext(syncCtx);
 
         var t = func();
         t.ContinueWith(
@@ -52,7 +50,7 @@ namespace KDLib
         t.GetAwaiter().GetResult();
       }
       finally {
-        SynchronizationContext.SetSynchronizationContext(prevCtx);
+        SetSynchronizationContext(prevCtx);
       }
     }
   }
