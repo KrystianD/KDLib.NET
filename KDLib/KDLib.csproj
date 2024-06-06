@@ -4,6 +4,7 @@
     <LangVersion>default</LangVersion>
     <RootNamespace>KDLib</RootNamespace>
     <Version>0.5.4</Version>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="*" />
