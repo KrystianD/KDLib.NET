@@ -3,7 +3,7 @@
     <TargetFrameworks>net5.0;net6.0</TargetFrameworks>
     <LangVersion>default</LangVersion>
     <RootNamespace>KDLib</RootNamespace>
-    <Version>0.5.4</Version>
+    <Version>0.5.5</Version>
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
