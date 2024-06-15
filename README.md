@@ -75,4 +75,5 @@ Supports net6.0, net5.0
 * URL utils - URL-encoding, creating/extending URLs, parsing URIs,
 * Miscellaneous - waiting for task completion with logging,
 * DateTime extensions - ToDateOnly,
-* ThreadSafeSharedRandom - thread safe Random wrapper.
+* ThreadSafeSharedRandom - thread safe Random wrapper,
+* Random extensions - more overloads.
