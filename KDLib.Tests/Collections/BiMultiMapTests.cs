@@ -137,5 +137,18 @@ namespace KDLib.Tests.Collections
       map.DeleteByKey(1, missingOk: true);
       map.DeleteByValue("val", missingOk: true);
     }
+
+    [Fact]
+    public void BiMultiMapKeysValuesTest()
+    {
+      var map = new BiMultiMap<int, string>();
+
+      map.Add(1, "val1");
+      map.Add(2, "val1");
+      map.Add(2, "val2");
+
+      map.Keys.Should().BeEquivalentTo(new[] { 1, 2 });
+      map.Values.Should().BeEquivalentTo(new[] { "val1", "val2" });
+    }
   }
 }

@@ -78,6 +78,9 @@ namespace KDLib.Collections
     public bool ContainsKey(TKey key) => _mapForward.ContainsKey(key);
     public bool ContainsValue(TValue value) => _mapReverse.ContainsKey(value);
 
+    public IReadOnlyCollection<TKey> Keys => _mapForward.Keys;
+    public IReadOnlyCollection<TValue> Values => _mapReverse.Keys;
+
     internal int KeysMapCount => _mapForward.Count;
     internal int ValuesMapCount => _mapReverse.Count;
   }
