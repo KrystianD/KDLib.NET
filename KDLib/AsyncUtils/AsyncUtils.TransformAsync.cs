@@ -10,46 +10,59 @@ namespace KDLib
   public static partial class AsyncUtils
   {
     [SuppressMessage("ReSharper", "AccessToDisposedClosure")]
-    public static async Task<List<TOutput>> TransformAsync<TInput, TOutput>(IEnumerable<TInput> input, int maxRunningTasks,
-                                                                            Func<TInput, Task<TOutput>> processor,
-                                                                            TaskScheduler? taskScheduler = null,
-                                                                            CancellationToken token = default)
+    public static Task<List<TOutput>> TransformAsync<TInput, TOutput>(IEnumerable<TInput> input, int maxRunningTasks,
+                                                                      Func<TInput, Task<TOutput>> processor,
+                                                                      TaskScheduler? taskScheduler = null,
+                                                                      CancellationToken token = default)
     {
-      using var semaphore = new SemaphoreSlim(maxRunningTasks);
-
-      async Task<TOutput> ItemProcessorOnCurrentContext(TInput item)
+      async Task<List<TOutput>> Main()
       {
-        await semaphore.WaitAsync(token);
-        try {
-          return await processor(item);
+        using var semaphore = new SemaphoreSlim(maxRunningTasks);
+
+        async Task<TOutput> ItemProcessorOnCurrentContext(TInput item)
+        {
+          await semaphore.WaitAsync(token);
+          try {
+            return await processor(item);
+          }
+          finally {
+            semaphore.Release();
+          }
         }
-        finally {
-          semaphore.Release();
+
+        async Task<TOutput> ItemProcessorOnTaskScheduler(TInput item)
+        {
+          await semaphore.WaitAsync(token);
+          try {
+            var task = await Task.Factory.StartNew(async () => await processor(item),
+                                                   token,
+                                                   TaskCreationOptions.None,
+                                                   taskScheduler);
+            return await task;
+          }
+          finally {
+            semaphore.Release();
+          }
         }
+
+        var tasks = taskScheduler == null
+            ? input.Select(ItemProcessorOnCurrentContext)
+            : input.Select(ItemProcessorOnTaskScheduler);
+
+        var res = await Task.WhenAll(tasks);
+
+        return res.ToList();
       }
 
-      async Task<TOutput> ItemProcessorOnTaskScheduler(TInput item)
-      {
-        await semaphore.WaitAsync(token);
-        try {
-          var task = await Task.Factory.StartNew(async () => await processor(item),
-                                                 token,
-                                                 TaskCreationOptions.None,
-                                                 taskScheduler);
-          return await task;
-        }
-        finally {
-          semaphore.Release();
-        }
+      if (taskScheduler == null) {
+        return Main();
       }
-
-      var tasks = taskScheduler == null
-          ? input.Select(ItemProcessorOnCurrentContext)
-          : input.Select(ItemProcessorOnTaskScheduler);
-
-      var res = await Task.WhenAll(tasks);
-
-      return res.ToList();
+      else {
+        return Task.Factory.StartNew(Main,
+                                     token,
+                                     TaskCreationOptions.None,
+                                     taskScheduler).Unwrap();
+      }
     }
 
     public static Task<List<KeyValuePair<TInput, TOutput>>> TransformMapAsync<TInput, TOutput>(IEnumerable<TInput> input, int maxRunningTasks,
