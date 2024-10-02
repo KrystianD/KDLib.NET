@@ -73,5 +73,31 @@ namespace KDLib.Tests
 
       Assert.Equal(new[] { 2, 4, 6, 8, 10 }, output);
     }
+
+    [Fact]
+    public async Task AsyncScopeTest()
+    {
+      var sc = new AsyncScope<bool>(false);
+
+      Assert.False(sc.Value);
+
+      async Task AsyncAssert(bool value)
+      {
+        await Task.Delay(10);
+        if (value)
+          Assert.True(sc.Value);
+        else
+          Assert.False(sc.Value);
+      }
+
+      using (sc.Push(true)) {
+        await AsyncAssert(true);
+        using (sc.Push(false)) {
+          await AsyncAssert(false);
+        }
+
+        await AsyncAssert(true);
+      }
+    }
   }
 }

@@ -39,6 +39,7 @@ Supports net6.0, net5.0
 #### Asynchronous programming
 
 * Async utilities
+  * `AsyncScope` - async scope variable,
   * `WaitFutureTimeout` - waiting for task completion with timeout,
   * `FastCancellableTask` - to stop waiting for non-cancellable task,
   * `WaitAll` - for easy values retrieval when waiting on multiple tasks,
