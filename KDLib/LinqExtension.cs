@@ -18,6 +18,16 @@ namespace KDLib
       return string.Join(separator, source);
     }
 
+    public static string JoinString(this IEnumerable<int> source, string separator = "")
+    {
+      return string.Join(separator, source);
+    }
+
+    public static string JoinString(this IEnumerable<long> source, string separator = "")
+    {
+      return string.Join(separator, source);
+    }
+
     public static bool In<T>(this T t, params T[] values)
     {
       return values.Contains(t);
