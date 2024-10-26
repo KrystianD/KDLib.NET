@@ -7,22 +7,23 @@ using Nito.Disposables;
 namespace KDLib
 {
   [PublicAPI]
-  public class AsyncScope<T>
+  public class AsyncScope<T>(T defaultValue)
   {
     private AsyncLocal<Stack<T>> _value = new();
 
-    public T Value => _value.Value!.Peek();
-
-    public AsyncScope(T def)
+    private Stack<T>? Stack
     {
-      _value.Value = new Stack<T>();
-      _value.Value!.Push(def);
+      get => _value.Value!;
+      set => _value.Value = value!;
     }
+
+    public T Value => Stack == null || Stack.Count == 0 ? defaultValue : Stack.Peek();
 
     public IDisposable Push(T value)
     {
-      _value.Value!.Push(value);
-      return Disposable.Create(() => _value.Value!.Pop());
+      Stack ??= new Stack<T>();
+      Stack.Push(value);
+      return Disposable.Create(() => Stack.Pop());
     }
   }
 }
