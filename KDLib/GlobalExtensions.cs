@@ -14,5 +14,18 @@ namespace KDLib
       var value = await task;
       return f(value);
     }
+
+    public static T With<T>(this T value, Action<T> f)
+    {
+      f(value);
+      return value;
+    }
+
+    public static async Task<T> WithAsync<T>(this Task<T> task, Action<T> f)
+    {
+      var value = await task;
+      f(value);
+      return value;
+    }
   }
 }

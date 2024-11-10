@@ -71,7 +71,7 @@ Supports net6.0, net5.0
 * SynchronizationContext extensions - simple Post and PostWaitAsync,
 * String utils - random string generation,
 * Compression utils - simple gzip compress/decompress methods,
-* Global extensions - Kotlin-like Let construct,
+* Global extensions - Kotlin-like `Let` and `With` construct,
 * TCP client extensions - cancellation-enabled ConnectAsync for pre .NET 5.0,
 * URI extensions - getting username/password from URI,
 * URL utils - URL-encoding, creating/extending URLs, parsing URIs,
