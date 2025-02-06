@@ -78,4 +78,5 @@ Supports net6.0, net5.0
 * Miscellaneous - waiting for task completion with logging,
 * DateTime extensions - ToDateOnly,
 * ThreadSafeSharedRandom - thread safe Random wrapper,
-* Random extensions - more overloads.
+* Random extensions - more overloads,
+* Rate limiters - token bucket rate limiter.
