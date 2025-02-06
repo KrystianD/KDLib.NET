@@ -28,6 +28,24 @@ namespace KDLib
       return tcs.Task;
     }
 
+    public static Task<T> PostWaitAsync<T>(this SynchronizationContext ctx, Func<T> d)
+    {
+      var tcs = new TaskCompletionSource<T>();
+      ctx.Post(_ => {
+        try {
+          var result = d();
+          tcs.SetResult(result);
+        }
+        catch (TaskCanceledException) {
+          tcs.SetCanceled();
+        }
+        catch (Exception e) {
+          tcs.SetException(e);
+        }
+      }, null);
+      return tcs.Task;
+    }
+
     public static Task PostWaitAsync(this SynchronizationContext ctx, Func<Task> d)
     {
       var tcs = new TaskCompletionSource<bool>();
