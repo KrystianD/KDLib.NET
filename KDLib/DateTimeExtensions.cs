@@ -24,5 +24,8 @@ namespace KDLib
     public static DateTime WithDay(this DateTime d, int day) => new DateTime(d.Year, d.Month, day, d.Hour, d.Minute, d.Second, d.Millisecond, d.Kind);
     public static DateTime WithMonth(this DateTime d, int month) => new DateTime(d.Year, month, d.Day, d.Hour, d.Minute, d.Second, d.Millisecond, d.Kind);
     public static DateTime WithYear(this DateTime d, int year) => new DateTime(year, d.Month, d.Day, d.Hour, d.Minute, d.Second, d.Millisecond, d.Kind);
+
+    public static long ToEpochMilliseconds(this DateTime dateTime) => (dateTime.Ticks - DateTime.UnixEpoch.Ticks) / TimeSpan.TicksPerMillisecond;
+    public static long ToEpochSeconds(this DateTime dateTime) => (dateTime.Ticks - DateTime.UnixEpoch.Ticks) / (TimeSpan.TicksPerMillisecond * 1000);
   }
 }
