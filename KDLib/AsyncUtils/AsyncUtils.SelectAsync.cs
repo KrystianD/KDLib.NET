@@ -28,7 +28,7 @@ namespace KDLib
 
       public async Task WaitAsync(CancellationToken token = default)
       {
-        var cts = CancellationTokenSource.CreateLinkedTokenSource(token);
+        using var cts = CancellationTokenSource.CreateLinkedTokenSource(token);
 
         var taskToAction = _tasks.ToDictionary(x => x.Key(cts.Token), x => x.Value);
 
@@ -59,7 +59,7 @@ namespace KDLib
 
       public async Task<TResult> WaitAsync(CancellationToken token = default)
       {
-        var cts = CancellationTokenSource.CreateLinkedTokenSource(token);
+        using var cts = CancellationTokenSource.CreateLinkedTokenSource(token);
 
         var taskToAction = _tasks.ToDictionary(x => x.Key(cts.Token), x => x.Value);
 
